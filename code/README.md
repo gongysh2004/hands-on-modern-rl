@@ -33,7 +33,7 @@ pip install -r chapter01_cartpole/requirements.txt
 | 章节                             | 目录                         | 代码文件   | 说明                                                       |
 | -------------------------------- | ---------------------------- | ---------- | ---------------------------------------------------------- |
 | **Ch03** MDP 与大模型语境        | `chapter03_mdp/`             | _(待补充)_ | 猜硬币 MDP 游戏、GridWorld Q-Learning、贝尔曼方程验证      |
-| **Ch04** DQN 与游戏控制          | `chapter04_dqn/`             | _(待补充)_ | DQN 玩 Pong、经验回放与目标网络                            |
+| **Ch04** 深度强化学习 DQN        | `chapter04_dqn/`             | _(待补充)_ | DQN 玩 Pong、经验回放与目标网络                            |
 | **Ch05** 策略梯度与 Actor-Critic | `chapter05_policy_gradient/` | _(待补充)_ | REINFORCE + 基线对比 + Actor-Critic、离散/连续动作空间示例 |
 | **Ch06** PPO 与奖励模型          | `chapter06_ppo/`             | _(待补充)_ | PPO 完整 PyTorch 实现（LunarLander）、GAE 调参、RM 训练    |
 

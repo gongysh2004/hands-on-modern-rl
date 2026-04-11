@@ -122,7 +122,7 @@ const zhSidebar = {
           ]
         },
         {
-          text: '第4章：DQN 与游戏控制',
+          text: '第4章：深度强化学习 DQN',
           collapsed: false,
           items: [
             { text: '章节导览', link: '/chapter04_dqn/intro' },

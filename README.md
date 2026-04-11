@@ -57,7 +57,7 @@
 | 章节           | 课题                                                               | 核心内容                                                                                                                                                                                                |
 | :------------- | :----------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Chapter 03** | [MDP 与大模型语境](docs/chapter03_mdp/intro.md)                    | 通过两台老虎机（Bandit）引入 MDP 形式化定义；推导贝尔曼方程，建立价值函数与 TD Error 的直觉；完成从表格方法到神经网络函数逼近的过渡。                                                                   |
-| **Chapter 04** | [DQN 与游戏控制](docs/chapter04_dqn/intro.md)                      | 从经典 Q-Learning 出发，引入深度 Q 网络；通过 CartPole、Atari、ViZDoom 与 stable-retro 宝可梦实战检验算法边界；解析经验回放与目标网络两大支柱机制；延伸至 Double DQN、Dueling DQN、Rainbow 等改进谱系。 |
+| **Chapter 04** | [深度强化学习 DQN](docs/chapter04_dqn/intro.md)                    | 从经典 Q-Learning 出发，引入深度 Q 网络；通过 CartPole、Atari、ViZDoom 与 stable-retro 宝可梦实战检验算法边界；解析经验回放与目标网络两大支柱机制；延伸至 Double DQN、Dueling DQN、Rainbow 等改进谱系。 |
 | **Chapter 05** | [策略梯度与 Actor-Critic](docs/chapter05_policy_gradient/intro.md) | 从摇骰子实验出发推导策略梯度定理；实现 REINFORCE 算法并观察高方差问题；引入基线与优势函数，构建 Actor-Critic 架构。                                                                                     |
 | **Chapter 06** | [PPO 与奖励模型](docs/chapter06_ppo/intro.md)                      | 深入剖析 PPO 的裁剪机制、GAE（广义优势估计）；理解 Reward Model 的训练方式；建立 PPO 与 LLM 对齐的对应关系。                                                                                            |
 
