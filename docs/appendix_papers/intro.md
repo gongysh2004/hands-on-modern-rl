@@ -73,8 +73,9 @@
 | Yu et al.   | 2025 | DAPO: An Open-Source LLM Reinforcement Learning System         | 提出动态采样和组奖励归一化的 PPO 变体        | [arXiv](https://arxiv.org/abs/2503.14476) | Ch8 DAPO      |
 | Guo et al.  | 2025 | DeepSeek-R1 with RLVR                                          | 在数学推理任务上验证 LLM 的强化学习训练范式  | [arXiv](https://arxiv.org/abs/2501.12948) | Ch8 RLVR      |
 | Shao et al. | 2024 | DeepSeekMath: Pushing the Limits of Mathematical Reasoning     | 在数学推理中引入 GRPO 的前身方法             | [arXiv](https://arxiv.org/abs/2402.03300) | Ch8 GRPO 前身 |
+| anonymous   | 2025 | Language Models that Think, Chat Better                        | 提出 RLMT，将长思考链 + 偏好奖励用于通用聊天 | [arXiv](https://arxiv.org/abs/2505.18288) | Ch8 RLMT      |
 
-**章节导读**：DeepSeek-R1 的 GRPO 是 2025 年最引人注目的 RL 训练方法之一。它省去了 Critic 网络，用组内统计量做 baseline，大幅简化了训练流程。RLVR 则是用可验证奖励训练 LLM 推理能力的核心范式。
+**章节导读**：DeepSeek-R1 的 GRPO 是 2025 年最引人注目的 RL 训练方法之一。它省去了 Critic 网络，用组内统计量做 baseline，大幅简化了训练流程。RLVR 则是用可验证奖励训练 LLM 推理能力的核心范式。RLMT 进一步将"先思考再回答"的范式从数学推广到通用聊天，证明了思考链的通用价值。
 
 ## 第9章：连续控制
 

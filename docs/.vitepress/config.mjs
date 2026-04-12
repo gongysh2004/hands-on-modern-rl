@@ -301,6 +301,10 @@ const zhSidebar = {
             {
               text: 'RLAIF 与自我博弈',
               link: '/chapter10_rlhf/rlaif-self-play'
+            },
+            {
+              text: '数据循环体系',
+              link: '/chapter10_rlhf/data-cycle'
             }
           ]
         },
@@ -320,6 +324,10 @@ const zhSidebar = {
             {
               text: 'VLM RL 框架与前沿',
               link: '/chapter11_vlm_rl/vlm-frameworks'
+            },
+            {
+              text: '视觉生成模型的 RL 后训练',
+              link: '/chapter11_vlm_rl/visual-generation-rl'
             }
           ]
         },
@@ -345,8 +353,16 @@ const zhSidebar = {
               link: '/chapter12_agentic_rl/agentic-engineering'
             },
             {
+              text: '工业界实战：各家的 Agentic RL 都怎么做的？',
+              link: '/chapter12_agentic_rl/industrial-practice'
+            },
+            {
               text: '深度研究智能体：Deep Research Agent',
               link: '/chapter12_agentic_rl/deep-research-agent'
+            },
+            {
+              text: '延伸阅读索引',
+              link: '/chapter12_agentic_rl/extended-readings'
             }
           ]
         },
@@ -370,6 +386,10 @@ const zhSidebar = {
             {
               text: '自博弈、自进化与学习路线',
               link: '/chapter13_future_trends/self-play-outlook'
+            },
+            {
+              text: 'LLM 多智能体强化学习',
+              link: '/chapter13_future_trends/llm-multi-agent-rl'
             },
             {
               text: '离线强化学习（CQL / IQL / DT）',
