@@ -229,39 +229,91 @@ html:not(.dark)[data-ct-theme='gray'] {
   --vp-layout-max-width: 100%;
 }
 
-.VPDoc .container {
+.VPDoc > .container {
   max-width: 100% !important;
 }
 
-.VPDoc .content {
+.VPDoc > .container > .content {
   max-width: 100% !important;
 }
 
-.VPDoc.has-aside .content {
-  /* For screens where the aside is visible, we need to leave space for it (256px max width of aside) */
-  max-width: calc(100% - 256px) !important;
-}
-
-.VPDoc .content-container {
+.VPDoc > .container > .content > .content-container {
   max-width: 100% !important;
 }
 
 @media (min-width: 1280px) {
-  .VPDoc .content {
+  .VPDoc > .container > .content {
     padding: 0 64px 128px !important;
   }
 }
 
 @media (min-width: 1440px) {
-  .VPDoc:not(.has-sidebar) .content {
+  .VPDoc:not(.has-sidebar) > .container > .content {
     max-width: 100% !important;
   }
 
-  .VPDoc:not(.has-sidebar) .container {
+  .VPDoc:not(.has-sidebar) > .container {
     max-width: 100% !important;
   }
 
-  .VPDoc .content {
+  .VPDoc > .container > .content {
     padding: 0 128px 128px !important;
   }
+}
+
+/* ---- Aside Outline ---- */
+.VPDocAsideOutline .content {
+  padding-left: 10px;
+}
+
+.VPDocAsideOutline .outline-title {
+  margin-bottom: 2px;
+}
+
+.VPDocAsideOutline .VPDocOutlineItem li {
+  position: relative;
+}
+
+.VPDocAsideOutline .VPDocOutlineItem.root {
+  margin: 0;
+  padding-left: 0;
+}
+
+.VPDocAsideOutline .VPDocOutlineItem .outline-link {
+  display: block;
+  padding: 6px 0 6px 2px;
+  min-height: 32px;
+  line-height: 1.45;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  border-radius: 10px;
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.VPDocAsideOutline .VPDocOutlineItem.nested {
+  padding-left: 10px;
+  padding-right: 0;
+}
+
+.VPDocAsideOutline .VPDocOutlineItem .outline-link:hover,
+.VPDocAsideOutline .VPDocOutlineItem .outline-link:focus-visible,
+.VPDocAsideOutline .VPDocOutlineItem .outline-link.active {
+  margin: 0 -6px 0 -4px;
+  padding: 6px 6px 6px 8px;
+  background: color-mix(in srgb, var(--vp-c-bg-alt) 88%, transparent);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+  transform: translateX(-1px);
+}
+
+.dark .VPDocAsideOutline .VPDocOutlineItem .outline-link:hover,
+.dark .VPDocAsideOutline .VPDocOutlineItem .outline-link:focus-visible,
+.dark .VPDocAsideOutline .VPDocOutlineItem .outline-link.active {
+  box-shadow: 0 12px 28px rgba(2, 6, 23, 0.32);
 }

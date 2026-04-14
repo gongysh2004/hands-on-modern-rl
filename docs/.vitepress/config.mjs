@@ -658,7 +658,7 @@ export default withMermaid(
           },
           outline: {
             level: [2, 3],
-            label: '页面目录'
+            label: 'Outline'
           },
           lastUpdated: {
             text: '最后更新'
@@ -702,7 +702,7 @@ export default withMermaid(
           },
           outline: {
             level: [2, 3],
-            label: 'On this page'
+            label: 'Outline'
           },
           lastUpdated: {
             text: 'Last updated'
@@ -750,7 +750,7 @@ export default withMermaid(
       },
       outline: {
         level: [2, 3],
-        label: 'On this page'
+        label: 'Outline'
       }
     }
   })
