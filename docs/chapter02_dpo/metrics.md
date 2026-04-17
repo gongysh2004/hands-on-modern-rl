@@ -55,54 +55,11 @@ $$\text{Margin} = r(x, y_w) - r(x, y_l) = \beta \log \frac{\pi_\theta(y_w | x)}{
 
 ### **Reward Accuracy（偏好准确率）**
 
-这是模型在训练批次（Batch）中，成功给 `chosen` 文本打出比 `rejected` 文本更高奖励的概率：
-
-$$\text{Accuracy} = \frac{1}{|B|} \sum_{i \in B} \mathbb{1}\left[r(x_i, y_w^{(i)}) > r(x_i, y_l^{(i)})\right]$$
-
-其中 $\mathbb{1}[\cdot]$ 是指示函数（条件成立为 1，否则为 0），$|B|$ 是批次大小。
+这是模型在训练批次（Batch）中，成功给 `chosen` 文本打出比 `rejected` 文本更高奖励的比例。具体来说，对批次中的每条数据计算隐式奖励 $r(x, y_w)$ 和 $r(x, y_l)$，如果前者大于后者就算"判对"，Accuracy 就是判对的比例。
 
 ![Reward Accuracy 曲线](./images/dpo-reward-accuracy.svg)
 
 训练开始时 Accuracy 在 0.5 附近（随机猜测），一个健康的训练过程，Accuracy 应该稳步上升，并最终收敛在 0.8 ~ 0.95 之间。
-
-### **Training Loss（训练损失）**
-
-在 DPO 中，训练 Loss 衡量的是模型预测出的隐式奖励（Implicit Reward）对给定偏好数据 $(y_w, y_l)$ 拟合的程度。训练开始时，模型还没学会区分好坏，Loss 大约在 $\ln 2 \approx 0.69$ 附近（即随机猜测的水平，图中虚线标注处）。
-
-- **整体趋势下降**：Loss 下降意味着模型正在成功拉开”好回答”和”坏回答”的概率差距。
-- **并非越低越好**：如果 Loss 降得极低，模型可能陷入了严重的过拟合（Overfitting）。这意味着它不再是“理解了什么是好话”，而仅仅是死记硬背了训练集里的句子。
-
-<details>
-<summary><strong>问题一：如果偏好数据标注错了（例如把刻薄的回答标记为 chosen），Loss 曲线会发生什么？</strong></summary>
-
-Loss 依然会正常下降！因为模型只是在无脑地拟合数据中给定的偏好关系。这也导致了微调后的模型会迅速“学坏”，变成一个刻薄的助手。
-
-这引出了后训练（Post-Training）时代的一个核心法则：**对齐的效果高度依赖数据质量，garbage in, garbage out。**
-
-</details>
-
-### **Reward Margin（奖励边界）**
-
-这是衡量 DPO 训练区分度的最直观指标。它表示模型赋予 `chosen` 文本的隐式奖励与 `rejected` 文本的隐式奖励之差。
-
-- **健康状态**：随着训练进行，Margin 应该逐渐增大并趋于稳定。这说明模型越来越确信“好回答”比“坏回答”要好得多。
-- **异常状态**：如果 Margin 变成负数，或者在零附近剧烈震荡，说明模型完全无法区分这两种回答的优劣。通常是因为两者长度差异过大、数据本身有歧义，或是学习率（Learning Rate）设置不当。
-
-<details>
-<summary><strong>问题二：如果我把 <code>beta</code> 参数从 0.1 改成 1.0，Reward Margin 会怎样变化？</strong></summary>
-
-在 DPO 中，`beta` 参数控制着对参考模型（Reference Model）偏离程度的惩罚。
-
-- 如果 `beta` 很大（如 1.0），惩罚极强，模型几乎不敢改变自己原来的输出分布。此时 Reward Margin 会非常小，甚至几乎不增长。
-- 如果 `beta` 很小（如 0.01），模型会为了拉大 Margin 不择手段，甚至输出一些人类看不懂的乱码来迎合公式。
-
-> **动手实验**：试着回到 `2-train_dpo.py` 中，把 `beta` 修改为 0.01 和 0.5，重新运行训练并观察 TensorBoard 中的 Margin 曲线差异。
-
-</details>
-
-### **Reward Accuracy（偏好准确率）**
-
-这是模型在训练批次（Batch）中，成功给 `chosen` 文本打出比 `rejected` 文本更高奖励的概率。训练开始时 Accuracy 在 0.5 附近（随机猜测），一个健康的训练过程，Accuracy 应该稳步上升，并最终收敛在 0.8 ~ 0.95 之间。
 
 ## 本章小结
 
