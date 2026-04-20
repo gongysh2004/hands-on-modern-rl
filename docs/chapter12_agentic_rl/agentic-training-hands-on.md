@@ -189,26 +189,44 @@ When confident, output your final implementation in a code block. You have at mo
 
 ### 3.2 Agent Rollout——真实的多轮交互
 
+参考 Search-R1 的 `LLMGenerationManager.run_llm_loop()` 和 ReTool 的 `CustomSandboxFusionTool`。
+
+**Search-R1 的做法**：维护一个 rolling state，每轮模型生成到 `</search>` 截断，搜索引擎返回结果后追加到 rolling state，下一轮模型看到完整历史继续生成。同时维护两个平行张量：`responses`（真实 token）和 `responses_with_info_mask`（工具 token 替换为 pad_id）。
+
+**ReTool 的做法**：模型生成 ```` ```python ``` ```` 代码块，正则 `r"```python(.*?)```"` 提取代码，沙箱执行后 stdout/stderr 作为 `tool` role 消息注入。如果最后一行没有 `print()`，自动补上。
+
 ```python
 # ==========================================
-# 3.2 Agent Rollout：模型生成 → 沙箱执行 → 观察结果 → 继续生成
-#     参考 SimpleTIR 的 AgentHelper 和 Search-R1 的 generation manager
+# 3.2 Agent Rollout
+#     参考 Search-R1 generation.py + ReTool retool.py
 # ==========================================
 
-def extract_code_blocks(text: str) -> list:
-    """提取 ```python ... ``` 代码块（和 SimpleTIR 一样的正则）"""
-    return re.findall(r'```(?:python|py)?\n(.*?)\n```', text, re.DOTALL)
+# ★ 和 ReTool 完全一样的代码块提取正则
+CODE_PATTERN = re.compile(r"```(?:python|py)?\n(.*?)\n```", re.DOTALL)
+
+def ensure_print(code: str) -> str:
+    """
+    ReTool 的做法：如果最后一行不是 print()，自动补上。
+    这样沙箱执行时最后一行的结果会被输出到 stdout。
+    """
+    lines = code.strip().split("\n")
+    for i in range(len(lines) - 1, -1, -1):
+        if lines[i].strip() and not lines[i].strip().startswith("print"):
+            lines[i] = f"print({lines[i]})"
+            break
+    return "\n".join(lines)
 
 def run_agent_rollout(task, temperature=0.7, max_turns=3, verbose=False):
     """
-    真实的多轮 Agent Rollout：
-    1. 模型生成回复（可能包含代码块）
-    2. 提取代码块 → 沙箱执行 → 拿到执行结果
-    3. 执行结果追加到上下文（作为 observation）
-    4. 模型看到结果，继续生成
-    5. 返回完整轨迹（用于后续 finetune）
+    多轮 Agent Rollout。
+    流程参考 Search-R1 的 run_llm_loop + ReTool 的 code_interpreter：
 
-    这就是 SimpleTIR / ReTool / Search-R1 的 rollout 核心循环。
+    1. 模型生成（可能包含 ```python``` 代码块）
+    2. 提取代码块（ReTool 的 CODE_PATTERN 正则）
+    3. 沙箱执行（ReTool 的 SandboxFusion / 我们的 subprocess）
+    4. 执行结果作为 observation 追加（Search-R1 的 next_obs）
+    5. 下一轮模型看到完整历史（Search-R1 的 rolling state）
+    6. 收集完整轨迹（用于后续 finetune）
     """
     conversation = [
         {"role": "system", "content": AGENT_PROMPT},
@@ -217,9 +235,10 @@ def run_agent_rollout(task, temperature=0.7, max_turns=3, verbose=False):
 
     current_code = ""
     passed = False
+    is_valid = True  # ★ SimpleTIR 的 void turn 检测：这轮是否产出了有效代码
 
     for turn_idx in range(max_turns):
-        # --- 模型生成 ---
+        # --- Step 1: 模型生成（Search-R1 的 generate_sequences） ---
         text = tokenizer.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True)
         inputs = tokenizer(text, return_tensors="pt").to(device)
 
@@ -229,31 +248,36 @@ def run_agent_rollout(task, temperature=0.7, max_turns=3, verbose=False):
                                  top_p=0.95, pad_token_id=tokenizer.pad_token_id)
 
         response = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
+
+        # ★ Search-R1 的 postprocess：追加 assistant 回复到轨迹
         conversation.append({"role": "assistant", "content": response})
 
-        # --- 提取代码块并执行 ---
-        code_blocks = extract_code_blocks(response)
+        # --- Step 2: 提取代码块（ReTool 的 CODE_PATTERN） ---
+        code_blocks = CODE_PATTERN.findall(response)
+
         if not code_blocks:
-            # 没有代码块 = 模型在纯推理或给最终答案
-            # 尝试把整个回复当作代码
+            # ★ SimpleTIR 的 void turn：这轮没有产出有效代码块
+            is_valid = False
             current_code = response
             break
 
-        # 取最后一个代码块作为当前实现
-        current_code = code_blocks[-1].strip()
+        # ★ ReTool 的做法：取最后一个代码块，确保有 print()
+        current_code = ensure_print(code_blocks[-1].strip())
+
+        # --- Step 3: 沙箱执行（ReTool 的 SandboxFusion / Search-R1 的 search） ---
         exec_result = sandbox_execute(current_code, task["prompt"], task["test"], task["entry_point"])
 
         if verbose:
             status = "PASS" if exec_result["passed"] else f"FAIL: {exec_result['error'][:50]}"
             print(f"  Turn {turn_idx+1}: {status}")
 
-        # --- 执行结果作为 observation 追加到上下文 ---
-        # ★ 这是 SimpleTIR/Search-R1 的关键：工具结果作为 user 消息
+        # --- Step 4: 执行结果作为 observation（Search-R1 的 next_obs） ---
         if exec_result["passed"]:
+            # ★ Search-R1 的 info 追加方式
             conversation.append({"role": "user",
-                "content": f"Execution result: ALL TESTS PASSED.\nOutput your final implementation."})
+                "content": f"<output>\nALL TESTS PASSED\n</output>\nOutput your final implementation."})
             passed = True
-            # 再让模型生成一次最终代码
+            # 再让模型生成最终代码
             text = tokenizer.apply_chat_template(conversation, tokenize=False, add_generation_prompt=True)
             inputs = tokenizer(text, return_tensors="pt").to(device)
             with torch.no_grad():
@@ -262,13 +286,14 @@ def run_agent_rollout(task, temperature=0.7, max_turns=3, verbose=False):
                                      pad_token_id=tokenizer.pad_token_id)
             final_resp = tokenizer.decode(out[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True).strip()
             conversation.append({"role": "assistant", "content": final_resp})
-            final_blocks = extract_code_blocks(final_resp)
+            final_blocks = CODE_PATTERN.findall(final_resp)
             if final_blocks:
                 current_code = final_blocks[-1].strip()
             break
         else:
+            # ★ Search-R1：报错信息作为 observation
             conversation.append({"role": "user",
-                "content": f"Execution result: FAILED\n{exec_result['error']}\n\nFix the code and try again."})
+                "content": f"<output>\nFAILED: {exec_result['error']}\n</output>\nFix the code and try again."})
 
     # 最终验证
     if current_code:
@@ -281,6 +306,7 @@ def run_agent_rollout(task, temperature=0.7, max_turns=3, verbose=False):
         "conversation": conversation,   # ★ 完整轨迹——训练用
         "completion": current_code,      # 最终代码——评测用
         "passed": passed,                # 是否通过——reward 用
+        "is_valid": is_valid,            # ★ SimpleTIR 的 void turn 过滤标记
         "turns": len([m for m in conversation if m["role"] == "assistant"]),
     }
 ```
@@ -301,64 +327,78 @@ print("-" * 60)
 
 ## 第四步：收集 Rollout 轨迹 → 构建 Finetune 数据
 
-Rollout 出来的轨迹是原始对话。要变成 finetune 数据，需要 tokenize 并构建 **assistant-only mask**——只有模型生成的 token 参与 loss，工具执行结果的 token 不参与。
+Rollout 出来的轨迹是原始对话。要变成 finetune 数据，需要 tokenize 并构建 **info_mask**——Search-R1 证明了这个 mask 对训练效果至关重要（有 mask: 0.431 vs 无 mask: 0.343）。
 
-这一步参考 Search-R1 的 `info_mask` 和 SimpleTIR 的 `_info_masked_concatenate`。
+### Search-R1 的 info_mask 机制
+
+Search-R1 维护**两个平行张量**：
+- `responses`：真实的 token 序列（包含 LLM 生成的 + 工具返回的）
+- `responses_with_info_mask`：工具返回的 token 被替换为 `pad_token_id`
+
+最终 `info_mask = create_attention_mask(responses_with_info_mask)`，pad → 0, 其余 → 1。这个 mask 同时用于 loss 和 KL 计算。
 
 ```python
 # ==========================================
-# 4. 构建 Finetune 数据：tokenize 轨迹 + assistant mask
-#    参考 Search-R1 的 I(y_t) masking 和 veRL 的 response_mask
+# 4. Tokenize 轨迹 + 构建 info_mask
+#    参考 Search-R1 的 _info_masked_concatenate_with_padding
+#    和 veRL 的 response_mask 机制
 # ==========================================
 
-def tokenize_for_finetune(conversation, max_length=2048):
+def tokenize_with_info_mask(conversation, max_length=2048):
     """
-    将多轮对话 tokenize 并构建训练用的 input_ids / labels。
+    将多轮对话 tokenize，构建两个输出：
+    - input_ids: 完整 token 序列（包含工具结果）
+    - info_mask: 1=LLM 生成的 token, 0=工具返回的 token
 
-    labels 规则（和 SimpleTIR/Search-R1 一致）：
-    - assistant 消息的 token → 保留原 id（算 loss）
-    - system / user 消息的 token → 设为 -100（不算 loss）
-
-    返回 dict: input_ids, attention_mask, labels
+    ★ 这就是 Search-R1 的 responses + responses_with_info_mask 模式。
     """
-    # 逐段 tokenize，标记每段是否是 assistant
-    all_tokens = []
-    token_is_assistant = []
+    pad_id = tokenizer.pad_token_id
+
+    # 逐段 tokenize，记录哪些 token 是 assistant 生成的
+    all_tokens = []          # 真实 token（用于 input_ids）
+    all_tokens_masked = []   # mask 版本（工具 token 替换为 pad_id，用于 info_mask）
     prev_text = ""
 
     for msg in conversation:
-        is_assist = (msg["role"] == "assistant")
-        # 构建到当前消息为止的完整文本
+        is_assistant = (msg["role"] == "assistant")
+
         partial = conversation[:conversation.index(msg) + 1]
-        if is_assist:
+        if is_assistant:
             full_text = tokenizer.apply_chat_template(partial, tokenize=False, add_generation_prompt=False)
         else:
             full_text = tokenizer.apply_chat_template(partial, tokenize=False, add_generation_prompt=True)
 
-        # 只取新增的 token（避免重复）
         new_text = full_text[len(prev_text):] if len(full_text) > len(prev_text) else ""
         if new_text:
             new_tokens = tokenizer.encode(new_text, add_special_tokens=False)
             all_tokens.extend(new_tokens)
-            token_is_assistant.extend([is_assist] * len(new_tokens))
+            # ★ Search-R1 的核心：assistant token 保留原 id，其余替换为 pad_id
+            if is_assistant:
+                all_tokens_masked.extend(new_tokens)   # LLM 生成的 → 保留
+            else:
+                all_tokens_masked.extend([pad_id] * len(new_tokens))  # 工具/系统 → pad_id
         prev_text = full_text
 
     # 截断
     if len(all_tokens) > max_length:
         all_tokens = all_tokens[:max_length]
-        token_is_assistant = token_is_assistant[:max_length]
+        all_tokens_masked = all_tokens_masked[:max_length]
 
     input_ids = torch.tensor([all_tokens], dtype=torch.long)
-    labels = torch.tensor([all_tokens], dtype=torch.long)
-    for i, is_a in enumerate(token_is_assistant):
-        if not is_a:
-            labels[0, i] = -100  # mask 掉非 assistant token
+    # ★ info_mask: 从 masked 版本创建（和 Search-R1 的 create_attention_mask 一样）
+    masked_ids = torch.tensor([all_tokens_masked], dtype=torch.long)
+    info_mask = (masked_ids != pad_id).long()  # 非 pad → 1, pad → 0
+
+    # labels 也构建：只有 assistant token 参与 loss
+    labels = input_ids.clone()
+    labels[info_mask == 0] = -100
 
     return {
         "input_ids": input_ids,
         "attention_mask": torch.ones_like(input_ids),
         "labels": labels,
-        "num_assistant_tokens": sum(1 for a in token_is_assistant if a),
+        "info_mask": info_mask,  # ★ Search-R1 的 info_mask：LLM token=1, tool token=0
+        "num_assistant_tokens": info_mask.sum().item(),
     }
 ```
 
@@ -419,6 +459,12 @@ print(f"成功轨迹: {len(success_trajs)}/{len(all_trajectories)} "
 if len(success_trajs) == 0:
     print("没有成功轨迹！需要调整模型或温度。跳过 SFT。")
 else:
+    # ★ SimpleTIR 的 void turn 过滤：丢弃 is_valid=False 的轨迹
+    valid_trajs = [t for t in success_trajs if t.get("is_valid", True)]
+    print(f"Void turn 过滤: {len(success_trajs)} → {len(valid_trajs)} (丢弃 {len(success_trajs)-len(valid_trajs)} 条无效轨迹)")
+    if len(valid_trajs) == 0:
+        valid_trajs = success_trajs  # fallback
+else:
     # 设置 LoRA
     model.enable_input_require_grads()
     model_sft = get_peft_model(model, LoraConfig(
@@ -428,15 +474,15 @@ else:
     model_sft.train()
     optimizer = AdamW(filter(lambda p: p.requires_grad, model_sft.parameters()), lr=LR)
 
-    print(f"\nSFT Training on {len(success_trajs)} successful trajectories...")
+    print(f"\nSFT Training on {len(valid_trajs)} successful trajectories...")
     print(f"Trainable params: {sum(p.numel() for p in model_sft.parameters() if p.requires_grad)/1e6:.1f}M")
 
     for epoch in range(MAX_EPOCHS):
-        random.shuffle(success_trajs)
+        random.shuffle(valid_trajs)
         total_loss = 0
 
-        for traj in success_trajs:
-            enc = tokenize_for_finetune(traj["conversation"])
+        for traj in valid_trajs:
+            enc = tokenize_with_info_mask(traj["conversation"])
             input_ids = enc["input_ids"].to(device)
             attention_mask = enc["attention_mask"].to(device)
             labels = enc["labels"].to(device)
@@ -453,7 +499,7 @@ else:
             optimizer.step()
             total_loss += loss.item()
 
-        avg_loss = total_loss / len(success_trajs)
+        avg_loss = total_loss / len(valid_trajs)
         print(f"  SFT Epoch {epoch+1}/{MAX_EPOCHS} | Avg Loss: {avg_loss:.4f}")
 
     model_sft.eval()
@@ -510,8 +556,14 @@ for epoch in range(MAX_EPOCHS):
         for g in range(GROUP_SIZE):
             result = run_agent_rollout(task, temperature=0.7, max_turns=3)
             result["task"] = task
-            # Reward = 通过测试 + 效率奖励（越少轮越好）
-            result["reward"] = (1.0 if result["passed"] else 0.0) - 0.02 * result["turns"]
+            # Reward 设计（参考 ReTool retool.py + Search-R1 qa_em.py）：
+            # 1. Outcome reward：二元 0/1
+            base_reward = 1.0 if result["passed"] else 0.0
+            # 2. ★ ReTool 的 tool-call shaping：答错时鼓励多调工具
+            if base_reward == 0 and result["turns"] > 1:
+                tool_bonus = (result["turns"] - 2) / 2 * 0.1
+                base_reward = max(-0.6, tool_bonus)
+            result["reward"] = base_reward
             trajectories.append(result)
 
         # ---- Phase 2: GRPO Advantage ----
@@ -524,7 +576,7 @@ for epoch in range(MAX_EPOCHS):
             if not traj["completion"]:
                 continue
 
-            enc = tokenize_for_finetune(traj["conversation"])
+            enc = tokenize_with_info_mask(traj["conversation"])
             input_ids = enc["input_ids"].to(device)
             attention_mask = enc["attention_mask"].to(device)
             labels = enc["labels"].to(device)
