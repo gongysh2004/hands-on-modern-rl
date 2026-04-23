@@ -11,6 +11,9 @@ CLAUDE.md
 
 # 运行时生成的图片、模型、数据
 *.png
+!docs/chapter01_cartpole/images/cartpole-real-env-frames.png
+!docs/chapter01_cartpole/images/cartpole-real-reward-curve.png
+!docs/chapter01_cartpole/images/cartpole-real-training-metrics.png
 code/**/output/
 code/**/*.zip
 code/**/dpo_results/
@@ -20,6 +23,9 @@ code/**/ppo_results/
 code/**/preference_data.json
 code/**/geometry_dataset/
 .claude/*
+
+# Debug scripts for textbook writing
+debug/
 
 # Temporary scripts and files
 temp/
