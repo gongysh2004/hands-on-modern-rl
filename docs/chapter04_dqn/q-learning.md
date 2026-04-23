@@ -186,6 +186,6 @@ $$Q(s, a) \leftarrow Q(s, a) + \alpha \left[ r + \gamma Q(s', a') - Q(s, a) \rig
 
 经典例子：在 Cliff Walking 环境中，Q-Learning 学到了贴着悬崖走的最短路径（因为它假设不会随机掉下去），而 SARSA 学到了远离悬崖的更安全路径（因为它知道有 10% 概率会随机探索掉下去）。在安全关键场景中，SARSA 的保守可能更实用。
 
-这些性质使 Q-Learning 成为最实用的 Value-Based 方法。但它有一个根本性的限制：**只能用表格存储 Q 值**。16 个格子的 GridWorld 没问题，但 CartPole 的状态是连续的，Atari 的画面有几十万像素——表格根本装不下。
+这些性质使 Q-Learning 成为最实用的 Value-Based 方法。但它有一个根本性的限制：**只能用表格存储 Q 值**。16 个格子的 GridWorld 没问题，但 CartPole 的状态是连续的，Atari 的画面有几十万像素——表格方法的存储需求远超物理设备的容量。
 
 下一节将展示如何用神经网络替代表格，解决状态空间爆炸的问题。[从 Q-Learning 到 DQN](./from-q-to-dqn)

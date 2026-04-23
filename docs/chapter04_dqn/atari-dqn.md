@@ -2,7 +2,7 @@
 
 2015 年 2 月，Nature 杂志的封面上印着一张 Atari 游戏的截图。那篇论文的标题叫"Human-level control through deep reinforcement learning"——通过深度强化学习实现人类水平的控制。DeepMind 展示了一个程序：它只看屏幕上的像素和游戏得分，就从头学会了玩 29 种 Atari 游戏，其中近一半达到了人类专业玩家的水平。没有任何人工特征工程，没有任何游戏规则输入——纯粹的"从像素到决策"。
 
-上一节我们在 CartPole 上用 MLP 跑通了 DQN。CartPole 的输入是 4 个数字，一个简单网络就能搞定。但真正让 DQN 名声大噪的，是它处理像素级输入的能力。这一节，我们跨越从 4 维向量到 28,000 维像素帧的鸿沟，用 CNN-DQN 学玩 Atari Pong。
+上一节我们在 CartPole 上用 MLP 跑通了 DQN。CartPole 的输入是 4 个数字，一个简单网络即可处理。但真正让 DQN 名声大噪的，是它处理像素级输入的能力。这一节，我们跨越从 4 维向量到 28,000 维像素帧的鸿沟，用 CNN-DQN 学玩 Atari Pong。
 
 ## 从 CartPole 到 Atari：什么变了？
 
