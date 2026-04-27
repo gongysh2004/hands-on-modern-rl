@@ -12,15 +12,16 @@
 
 DQN 的核心思想：既然表格装不下，那就用神经网络来代替表格。输入一个状态（比如一帧像素），神经网络直接输出每个动作的 $Q$ 值。就这么一个替换，看似平淡无奇，但要在实践中真正让这个东西训练起来，DeepMind 的研究者们费了很大的功夫。他们发现直接把神经网络套在 Q-Learning 上会训练崩溃，原因有两个：一是连续的 Atari 游戏帧几乎一模一样，逐帧训练会让梯度被"当前帧"绑架；二是 $Q$ 值更新的目标本身也在不断变化，网络在追自己的尾巴。为了解决这两个问题，他们提出了两个关键的工程技巧——经验回放（Experience Replay）和目标网络（Target Network）。正是这两个技巧，让 DQN 成为了深度强化学习的里程碑。
 
-本章沿着"理论 → 组件 → 动手 → 观察 → 演进"的路径展开。
+本章沿着"理论 → 组件 → 观察 → 演进 → 动手 → 项目"的路径展开。先把 DQN 为什么能训练稳定讲清楚，再把完整实现和更大的游戏项目放到章末。
 
-| 小节 | 核心问题 |
-| --- | --- |
-| [Q-Learning：TD 方法 for Q](./q-learning) | Q-Learning 的更新规则是什么？GridWorld 实验怎么跑？ |
-| [从 Q-Learning 到 DQN](./from-q-to-dqn) | Q-Learning 的表格为什么装不下？神经网络怎么替代？ |
-| [DQN 三大组件](./dqn-components) | Q-Network、经验回放、目标网络分别解决什么问题？ |
-| [动手：DQN 玩 CartPole](./cartpole-dqn) | 如何从零实现一个完整的 DQN？ |
-| [观察训练过程](./training-analysis) | 经验回放和目标网络各自起了什么作用？ |
-| [DQN 家族与视角迁移](./dqn-family) | 从 Double DQN 到 Rainbow，DQN 的思想如何延续到 LLM？ |
+| 小节                                             | 核心问题                                                   |
+| ------------------------------------------------ | ---------------------------------------------------------- |
+| [Q-Learning：TD 方法 for Q](./q-learning)        | Q-Learning 的更新规则是什么？GridWorld 实验怎么跑？        |
+| [从 Q-Learning 到 DQN](./from-q-to-dqn)          | Q-Learning 的表格为什么装不下？神经网络怎么替代？          |
+| [DQN 三大组件](./dqn-components)                 | Q-Network、经验回放、目标网络分别解决什么问题？            |
+| [观察训练过程](./training-analysis)              | 经验回放和目标网络各自起了什么作用？                       |
+| [DQN 家族与视角迁移](./dqn-family)               | 从 Double DQN 到 Rainbow，DQN 的思想如何延续到 LLM？       |
+| [动手：DQN 玩 CartPole](./cartpole-dqn)          | 如何从零实现一个完整的 DQN？                               |
+| [项目：DQN 视觉游戏扩展](./visual-game-projects) | Atari、ViZDoom、宝可梦这些视觉游戏项目如何复用和挑战 DQN？ |
 
 让我们从 Q-Learning 的局限说起——[从 Q-Learning 到 DQN](./from-q-to-dqn)。

@@ -18,11 +18,11 @@
 
 ## 本章结构
 
-| 小节 | 核心问题 |
-| --- | --- |
-| [优势函数](./advantage-function) | 优势函数是什么？为什么它比 $G_t$ 更好？ |
-| [Critic 训练方法](./critic-training) | 怎么训练 Critic 来估计 $V(s)$？DP/MC/TD 的具体实现 |
-| [Actor-Critic 架构](./actor-critic) | Actor 和 Critic 怎么协作？TD Error 如何替代 $G_t$？ |
-| [动手：AlphaGo 简易复现](./alphago) | Actor-Critic + MCTS 能做什么？ |
+| 小节                                 | 核心问题                                            |
+| ------------------------------------ | --------------------------------------------------- |
+| [优势函数](./advantage-function)     | 优势函数是什么？为什么它比 $G_t$ 更好？             |
+| [Critic 训练方法](./critic-training) | 怎么训练 Critic 来估计 $V(s)$？DP/MC/TD 的具体实现  |
+| [Actor-Critic 架构](./actor-critic)  | Actor 和 Critic 怎么协作？TD Error 如何替代 $G_t$？ |
+| [项目：AlphaGo 简易复现](./alphago)  | Actor-Critic + MCTS 能做什么？                      |
 
 让我们从优势函数开始——它是连接 Actor 和 Critic 的桥梁。[优势函数与 Critic 训练](./advantage-critic)

@@ -132,7 +132,7 @@ const zhSidebar = {
           link: '/chapter03_mdp/intro',
           collapsed: false,
           items: [
-            { text: '3.1 多臂老虎机', link: '/chapter03_mdp/bandit' },
+            { text: '3.1 动手：多臂老虎机', link: '/chapter03_mdp/bandit' },
             { text: '3.2 马尔可夫决策过程', link: '/chapter03_mdp/mdp' },
             {
               text: '3.3 V(s) 与贝尔曼方程',
@@ -166,23 +166,18 @@ const zhSidebar = {
             },
             { text: '4.3 Replay、Target 与 CNN', link: '/chapter04_dqn/dqn-components' },
             {
-              text: '4.4 DQN 玩 CartPole',
+              text: '4.4 训练过程分析',
+              link: '/chapter04_dqn/training-analysis'
+            },
+            { text: '4.5 Double、Dueling 与 Rainbow', link: '/chapter04_dqn/dqn-family' },
+            {
+              text: '4.6 动手：DQN 玩 CartPole',
               link: '/chapter04_dqn/cartpole-dqn'
             },
             {
-              text: '4.5 从像素学玩 Atari',
-              link: '/chapter04_dqn/atari-dqn'
-            },
-            {
-              text: '4.6 ViZDoom 第一人称任务',
-              link: '/chapter04_dqn/vizdoom-dqn'
-            },
-            {
-              text: '4.7 stable-retro 玩宝可梦',
-              link: '/chapter04_dqn/retro-pokemon'
-            },
-            { text: '4.8 训练过程分析', link: '/chapter04_dqn/training-analysis' },
-            { text: '4.9 Double、Dueling 与 Rainbow', link: '/chapter04_dqn/dqn-family' }
+              text: '4.7 项目：DQN 视觉游戏扩展',
+              link: '/chapter04_dqn/visual-game-projects'
+            }
           ]
         },
         {
@@ -191,7 +186,7 @@ const zhSidebar = {
           collapsed: false,
           items: [
             {
-              text: '5.1 摇骰子赌博机',
+              text: '5.1 动手：摇骰子赌博机',
               link: '/chapter05_policy_gradient/dice-game'
             },
             {
@@ -199,7 +194,7 @@ const zhSidebar = {
               link: '/chapter05_policy_gradient/policy-gradient'
             },
             {
-              text: '5.3 Baseline 降方差',
+              text: '5.3 动手：Baseline 降方差',
               link: '/chapter05_policy_gradient/baseline-experiment'
             }
           ]
@@ -222,7 +217,7 @@ const zhSidebar = {
               link: '/chapter06_actor_critic/actor-critic'
             },
             {
-              text: '6.4 AlphaGo 简单复现',
+              text: '6.4 项目：AlphaGo 简单复现',
               link: '/chapter06_actor_critic/alphago'
             }
           ]
@@ -233,17 +228,20 @@ const zhSidebar = {
           collapsed: false,
           items: [
             {
-              text: '7.1 PPO 训练 LunarLander',
-              link: '/chapter06_ppo/ppo-lunar-lander'
+              text: '7.1 PPO 数学推导',
+              link: '/chapter06_ppo/ppo-math'
             },
-            { text: '7.2 PPO 数学推导', link: '/chapter06_ppo/ppo-math' },
             {
-              text: '7.3 信任域与裁剪',
+              text: '7.2 信任域与裁剪',
               link: '/chapter06_ppo/trust-region-clipping'
             },
             {
-              text: '7.4 GAE 与奖励模型',
+              text: '7.3 GAE 与奖励模型',
               link: '/chapter06_ppo/gae-reward-model'
+            },
+            {
+              text: '7.4 动手：PPO 训练 LunarLander',
+              link: '/chapter06_ppo/ppo-lunar-lander'
             }
           ]
         },
@@ -259,24 +257,24 @@ const zhSidebar = {
           collapsed: false,
           items: [
             {
-              text: '8.1 奖励黑客实战',
-              link: '/chapter10_rlhf/reward-hacking-hands-on'
-            },
-            {
-              text: '8.2 SFT 与偏好数据',
+              text: '8.1 SFT 与偏好数据',
               link: '/chapter10_rlhf/imitation-learning-pipeline'
             },
             {
-              text: '8.3 奖励函数设计',
+              text: '8.2 奖励函数设计',
               link: '/chapter10_rlhf/reward-function-design'
             },
             {
-              text: '8.4 KL、崩溃与稳定性',
+              text: '8.3 KL、崩溃与稳定性',
               link: '/chapter10_rlhf/training-stability-hacking'
             },
             {
-              text: '8.5 自我博弈与数据飞轮',
+              text: '8.4 自我博弈与数据飞轮',
               link: '/chapter10_rlhf/rlaif-and-data-cycle'
+            },
+            {
+              text: '8.5 动手：奖励黑客实战',
+              link: '/chapter10_rlhf/reward-hacking-hands-on'
             }
           ]
         },
@@ -286,15 +284,15 @@ const zhSidebar = {
           collapsed: false,
           items: [
             {
-              text: '9.1 DPO 对齐实验',
-              link: '/chapter07_alignment/dpo-hands-on'
-            },
-            {
-              text: '9.2 DPO、IPO 与 KTO',
+              text: '9.1 DPO、IPO 与 KTO',
               link: '/chapter07_alignment/dpo-theory-and-family'
             },
             {
-              text: '9.3 GRPO 训练循环',
+              text: '9.2 动手：DPO 对齐实验',
+              link: '/chapter07_alignment/dpo-hands-on'
+            },
+            {
+              text: '9.3 GRPO 实践与机制',
               link: '/chapter08_grpo_rlvr/grpo-practice-and-mechanism'
             },
             {
@@ -317,39 +315,39 @@ const zhSidebar = {
           collapsed: false,
           items: [
             {
-              text: '10.1 ORM 与 PRM 对比',
-              link: '/chapter12_agentic_rl/agent-loop-hands-on'
-            },
-            {
-              text: '10.2 多轮交互与信用分配',
+              text: '10.1 多轮交互与信用分配',
               link: '/chapter12_agentic_rl/multi-turn-rl'
             },
             {
-              text: '10.3 轨迹合成与数据工程',
+              text: '10.2 轨迹合成与数据工程',
               link: '/chapter12_agentic_rl/trajectory-synthesis'
             },
             {
-              text: '10.4 工具调用 RL',
+              text: '10.3 工具调用 RL',
               link: '/chapter12_agentic_rl/tool-use-agents'
             },
             {
-              text: '10.5 端到端 Agentic 训练',
-              link: '/chapter12_agentic_rl/agentic-training-hands-on'
-            },
-            {
-              text: '10.6 Agentic 工程',
+              text: '10.4 Agentic 工程',
               link: '/chapter12_agentic_rl/agentic-engineering'
             },
             {
-              text: '10.7 工业实践',
+              text: '10.5 工业实践',
               link: '/chapter12_agentic_rl/industrial-practice'
             },
             {
-              text: '10.8 Benchmark 与评测',
+              text: '10.6 Benchmark 与评测',
               link: '/chapter12_agentic_rl/evaluation-benchmarks'
             },
             {
-              text: '10.9 Deep Research Agent',
+              text: '10.7 动手：ORM 与 PRM 对比',
+              link: '/chapter12_agentic_rl/agent-loop-hands-on'
+            },
+            {
+              text: '10.8 项目：端到端 Agentic 训练',
+              link: '/chapter12_agentic_rl/agentic-training-hands-on'
+            },
+            {
+              text: '10.9 项目：Deep Research Agent',
               link: '/chapter12_agentic_rl/deep-research-agent'
             },
             {
@@ -370,20 +368,20 @@ const zhSidebar = {
           collapsed: false,
           items: [
             {
-              text: '11.1 GRPO 训练 VLM',
-              link: '/chapter11_vlm_rl/vlm-grpo-hands-on'
-            },
-            {
-              text: '11.2 视觉奖励与幻觉',
+              text: '11.1 视觉奖励与幻觉',
               link: '/chapter11_vlm_rl/vlm-challenges'
             },
             {
-              text: '11.3 Open-R1、R1-V 与 VLM-R1',
+              text: '11.2 Open-R1、R1-V 与 VLM-R1',
               link: '/chapter11_vlm_rl/vlm-frameworks'
             },
             {
-              text: '11.4 视觉生成 RL',
+              text: '11.3 视觉生成 RL',
               link: '/chapter11_vlm_rl/visual-generation-rl'
+            },
+            {
+              text: '11.4 动手：GRPO 训练 VLM',
+              link: '/chapter11_vlm_rl/vlm-grpo-hands-on'
             }
           ]
         },
@@ -393,28 +391,28 @@ const zhSidebar = {
           collapsed: false,
           items: [
             {
-              text: '12.1 PyBullet 机器人仿真',
-              link: '/chapter09_continuous_control/pybullet-hands-on'
-            },
-            {
-              text: '12.2 DDPG 与 TD3',
+              text: '12.1 DDPG 与 TD3',
               link: '/chapter09_continuous_control/continuous-policy-ddpg-td3'
             },
             {
-              text: '12.3 SAC、PPO 与 TD3 对比',
+              text: '12.2 SAC、PPO 与 TD3 对比',
               link: '/chapter09_continuous_control/sac-comparison'
             },
             {
-              text: '12.4 HER',
+              text: '12.3 HER',
               link: '/chapter09_continuous_control/her-sparse-reward'
             },
             {
-              text: '12.5 扩散策略',
+              text: '12.4 扩散策略',
               link: '/chapter09_continuous_control/diffusion-policy'
             },
             {
-              text: '12.6 Sim-to-Real',
+              text: '12.5 Sim-to-Real',
               link: '/chapter09_continuous_control/embodied-intelligence'
+            },
+            {
+              text: '12.6 项目：PyBullet 机器人仿真',
+              link: '/chapter09_continuous_control/pybullet-hands-on'
             }
           ]
         },
@@ -444,7 +442,7 @@ const zhSidebar = {
               link: '/chapter13_future_trends/offline-rl'
             },
             {
-              text: '13.6 PettingZoo',
+              text: '13.6 动手：PettingZoo',
               link: '/chapter13_future_trends/pettingzoo'
             }
           ]
