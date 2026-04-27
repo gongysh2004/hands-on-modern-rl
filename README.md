@@ -1,115 +1,194 @@
 <div align="center">
   <h1>Hands-On Modern RL</h1>
-  <p><strong>现代强化学习实战</strong></p>
-  <p><em>From Code to Theory — 从代码到原理</em></p>
+  <p><strong>现代强化学习实战课程</strong></p>
+  <p><em>Practice-first reinforcement learning, from CartPole to LLM post-training and agentic systems.</em></p>
 
   <p>
-    <a href="https://github.com/walkinglabs/hands-on-modern-rl/stargazers"><img src="https://img.shields.io/badge/Stars-0-eab676?style=for-the-badge&logo=github" alt="Stars" /></a>
-    <a href="https://github.com/walkinglabs/hands-on-modern-rl/network/members"><img src="https://img.shields.io/badge/Forks-0-87a96b?style=for-the-badge&logo=github" alt="Forks" /></a>
-    <a href="https://github.com/walkinglabs/hands-on-modern-rl/issues"><img src="https://img.shields.io/badge/Issues-0-c780e8?style=for-the-badge&logo=github" alt="Issues" /></a>
-    <a href="https://github.com/walkinglabs/hands-on-modern-rl/pulls"><img src="https://img.shields.io/badge/Pull%20Requests-0-7ea9e1?style=for-the-badge&logo=github" alt="Pull Requests" /></a>
-    <a href="https://github.com/walkinglabs/hands-on-modern-rl/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-e26d5c?style=for-the-badge" alt="CC BY-NC-SA 4.0 License" /></a>
+    <a href="https://walkinglabs.github.io/hands-on-modern-rl/"><img src="https://img.shields.io/badge/Course-Online-2563eb?style=flat-square" alt="Online Course" /></a>
+    <a href="https://github.com/walkinglabs/hands-on-modern-rl/actions/workflows/deploy.yml"><img src="https://github.com/walkinglabs/hands-on-modern-rl/actions/workflows/deploy.yml/badge.svg" alt="Deploy VitePress site to Pages" /></a>
+    <a href="https://github.com/walkinglabs/hands-on-modern-rl/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-111827?style=flat-square" alt="CC BY-NC-SA 4.0 License" /></a>
+    <img src="https://img.shields.io/badge/Node-%3E%3D18-16a34a?style=flat-square" alt="Node >= 18" />
+    <img src="https://img.shields.io/badge/Docs-VitePress-646cff?style=flat-square" alt="VitePress" />
   </p>
 
   <p>
-    <a href="#课程概述">课程概述</a> &middot;
-    <a href="#课程大纲">课程大纲</a> &middot;
-    <a href="#本地运行环境">本地运行环境</a> &middot;
-    <a href="#参与贡献">参与贡献</a>
+    <a href="#overview">Overview</a> ·
+    <a href="#curriculum">Curriculum</a> ·
+    <a href="#labs">Labs</a> ·
+    <a href="#getting-started">Getting Started</a> ·
+    <a href="#contributing">Contributing</a>
   </p>
 </div>
 
 ---
 
-> 作者水平有限，加上使用了 AI 辅助写作，内容可能存在错误或不准确的地方，欢迎大家指出。希望这门课程能让强化学习不再那么令人望而生畏，让更多普通人也有攀登智能上限的勇气。
+## Overview
 
-## 课程概述
+**Hands-On Modern RL** 是一门面向现代强化学习实践的开放课程。它从可运行的代码和可观察的训练现象出发，逐步回到强化学习的数学结构，再连接到大语言模型后训练、偏好对齐、可验证奖励、视觉语言模型和 Agentic RL 等前沿主题。
 
-强化学习（Reinforcement Learning）是机器学习中一个核心但门槛较高的分支。传统的教学路径通常从马尔可夫决策过程（MDP）和贝尔曼方程的形式化定义出发，这对许多学习者的耐心和理解力构成了不必要的挑战。
+这不是一份只罗列公式的讲义，也不是一组只调用框架 API 的 demo。课程的目标是建立一条完整路径：先让学习者看到智能体如何在环境中试错、如何从奖励中改进行为，再解释这些现象背后的状态、动作、价值函数、策略梯度、优势估计、奖励建模和信用分配。
 
-本课程采用另一种路径：**先建立直觉，再引入形式化**。我们认为，当学习者亲手实现一个算法、观察到它的行为，再回过头理解其背后的数学结构时，学习过程会更加自然，理解也会更加持久。
+课程内容采用中英双语术语体系组织，主文本以中文讲解为主，保留必要英文术语、论文名和工程概念，方便读者阅读原始论文、开源实现和工业系统文档。
 
-具体而言，课程围绕以下四条线索展开：
+## Status
 
-1. **代码先行**——第一章即动手训练 CartPole 智能体，第二章用 DPO 微调大语言模型，通过实验建立对状态、动作、奖励、策略的直觉。
-2. **算法拆解**——逐行精读 DQN、PPO、DPO、GRPO 等工业级算法的实现，追问每一步设计选择背后的动机，而非仅仅调用 API。
-3. **理论回溯**——在实践基础上系统讲授 MDP、贝尔曼方程、策略梯度定理、GAE 等理论，完成从直觉到形式化的闭环。
-4. **前沿衔接与 LLM 时代**——深入大模型后训练（Post-Training）的核心地带。从 RLHF 三阶段完整流水线、离线对齐方法族（DPO / KTO / SimPO）的理论等价性，到 Pure-RL 范式下的无 Critic 算法（GRPO / DAPO）与可验证奖励（RLVR），全面解析大语言模型的强化学习实践。
-5. **多模态与 Agentic RL**——跨越单轮文本交互的边界。探讨 VLM（视觉语言模型）的强化学习挑战与奖励分配；深入 Agentic RL，拆解多轮工具调用、Web Agent / Code Agent 的轨迹合成机制、信用分配难题（Credit Assignment）以及 Deep Research Agent 的前沿工程落地，揭示从基础对齐到自主智能体进化的完整路径。
+This repository is an active courseware project. The material is being expanded and refined chapter by chapter, with emphasis on correctness, runnable examples, and a stable learning path.
 
-## 课程目标
+- Course site: [walkinglabs.github.io/hands-on-modern-rl](https://walkinglabs.github.io/hands-on-modern-rl/)
+- Source content: [`docs/`](docs/)
+- Runnable examples: [`code/`](code/)
+- Local verification: `npm run verify`
+- License: [CC BY-NC-SA 4.0](LICENSE)
 
-学完本课程后，学习者应能够：
+Issues and pull requests are welcome for typo fixes, conceptual corrections, reproducibility improvements, additional references, and carefully scoped course extensions.
 
-- 理解强化学习的核心数学框架（MDP、价值函数、策略梯度），并能够用代码将其实现。
-- 阅读并理解 DQN、PPO、DPO、GRPO 等主流算法的原始论文及其工程实现。
-- **精通 LLM 强化学习后训练（Post-Training）**：熟练掌握 RLHF 完整流水线与数据工程（SFT / RM / PPO），理解 DPO 等离线对齐方法的数学本质，并能运用 GRPO / DAPO 与可验证奖励（RLVR）范式驱动模型涌现推理能力（如 DeepSeek-R1-Zero 范式）。
-- **具备 Agentic RL 与 VLM 的前沿工程实战能力**：能够应对多轮交互中的信用分配挑战，构建轨迹合成与自进化数据飞轮，实现具备复杂工具调用（Tool Use）能力的 Web Agent 与 Code Agent，并掌握视觉语言模型的特殊奖励分配技巧。
-- 针对给定的实际问题，合理选择并调试适用的强化学习算法，具备解决策略崩溃、奖励投机等实际工程问题的经验。
+## Design Principles
 
-## 课程大纲
+The course is organized around a few engineering and teaching principles:
 
-### 前言
+1. **Practice before formalism.** Each major topic starts from an experiment, metric, failure case, or implementation detail before introducing the mathematical abstraction.
+2. **Theory that explains behavior.** MDPs, Bellman equations, policy gradients, GAE, PPO clipping, DPO objectives, and GRPO-style group advantages are introduced as tools for explaining what the code is doing.
+3. **Modern RL, not only classic RL.** The curriculum covers classic control and deep RL, then moves into RLHF, preference optimization, RLVR, VLM RL, and multi-turn agent training.
+4. **Debuggability as a first-class skill.** Training collapse, reward hacking, KL drift, entropy decay, OOM failures, and evaluation blind spots are treated as core material rather than afterthoughts.
+5. **Readable systems over black boxes.** The code examples favor explicit implementation, inspectable metrics, and clean experiment boundaries so learners can modify and extend them.
 
-| 课题                                                   | 说明                 |
-| :----------------------------------------------------- | :------------------- |
-| [写在开头](docs/preface/intro.md)                      | 课程定位与学习路线。 |
-| [强化学习简史](docs/preface/brief-history/index.md)    | 从试错学习到 AlphaGo 到 LLM 对齐。 |
+## Audience
 
-### 第一篇：基础导论
+This course is designed for learners who want to understand reinforcement learning by building and inspecting working systems.
 
-| 章节           | 课题                                                                 | 核心内容                                                                                                             |
-| :------------- | :------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
-| **Chapter 01** | [RL 初印象：求解 CartPole](docs/chapter01_cartpole/intro.md)         | 运行第一个 CartPole 训练脚本，理解核心原理；观察训练与指标变化，在实验中理解状态、动作、奖励、策略等基本要素的含义。 |
-| **Chapter 02** | [现代 RL 初体验：大语言模型与 DPO 对齐](docs/chapter02_dpo/intro.md) | 用 DPO 算法对大语言模型进行偏好微调，直观体验后训练（post-training）的完整流程与核心原理；分析训练与指标表现。       |
+It is especially useful for:
 
-### 第二篇：核心理论与方法
+- machine learning engineers moving from supervised learning into RL;
+- researchers and students preparing to read modern RL and alignment papers;
+- LLM practitioners who want to understand RLHF, DPO, GRPO, RLVR, and post-training systems;
+- builders of tool-using agents, Web agents, Code agents, and evaluation pipelines;
+- self-directed learners who prefer code, experiments, and visual intuition before dense formalism.
 
-| 章节           | 课题                                                               | 核心内容                                                                                                                                                                 |
-| :------------- | :----------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Chapter 03** | [RL 理论基石：状态、动作与价值](docs/chapter03_mdp/intro.md)       | 动手实践两台老虎机（Bandit）；引入 MDP 形式化定义与价值函数；推导贝尔曼方程，建立对 TD Error 的直觉；了解经典方法与强化学习路线图。                                      |
-| **Chapter 04** | [深度强化学习 DQN](docs/chapter04_dqn/intro.md)                    | 从经典 Q-Learning 到 DQN 的演进；拆解 DQN 三大组件；通过 CartPole、Atari 像素级输入、ViZDoom 及 stable-retro 宝可梦实战检验算法；观察训练过程，解析 DQN 家族与视角迁移。 |
-| **Chapter 05** | [策略梯度与 REINFORCE](docs/chapter05_policy_gradient/intro.md)    | 从摇骰子赌博机实验出发，推导策略梯度定理与 REINFORCE；完成基线实验总结，为 Actor-Critic 架构奠定基础。                                                                   |
-| **Chapter 06** | [Actor-Critic 架构](docs/chapter06_actor_critic/intro.md)          | 引入优势函数与 Critic 训练方法，构建 Actor-Critic 架构；动手完成 AlphaGo 简单复现。                                                                                     |
-| **Chapter 07** | [PPO——稳定训练的艺术](docs/chapter06_ppo/intro.md)                 | 动手训练 LunarLander；深入剖析 PPO 数学推导、信任域与裁剪机制；理解 GAE 的优势估计、奖励模型机制及其在 LLM 对齐中的作用。                                                |
+Recommended background:
 
-### 第三篇：大模型强化学习
+- Python programming experience;
+- basic PyTorch familiarity;
+- linear algebra, probability, and calculus at an introductory ML level;
+- comfort reading papers and tracing open-source training scripts.
 
-| 章节           | 课题                                                                               | 核心内容                                                                                                                                                                                         |
-| :------------- | :--------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Chapter 08** | [RLHF 完整流水线](docs/chapter10_rlhf/intro.md)                                    | 全景展示模仿学习与数据工程流水线；探讨奖励函数设计原则；应对训练稳定性挑战与防范奖励黑客；前瞻 RLAIF 与自我博弈机制；构建数据循环体系。                                                           |
-| **Chapter 09** | [对齐与推理强化（DPO / GRPO / RLVR）](docs/chapter07_alignment/intro.md)            | 动手实践 DPO 对齐实验，推导 DPO 数学本质与隐式奖励模型；对比 DPO 家族不同衍生方法；运用 GRPO 训练数学推理能力；探讨 DeepSeek 范式、DAPO 与 RLVR；展望 RL Scaling 与前沿；深入知识蒸馏与在线策略蒸馏。 |
-| **Chapter 10** | [Agentic RL](docs/chapter12_agentic_rl/intro.md)                                   | 从单轮交互扩展到多轮交互 RL 与信用分配；解析轨迹合成与数据工程；实战工具调用 RL（Web Agent 与 Code Agent）；梳理工业界 Agentic RL 实践、评测体系与 Benchmark 全景；深入 Deep Research Agent。    |
+The mathematical appendix is included for review, so the course does not assume perfect fluency from day one.
 
-### 第四篇：前沿与进阶专题
+## Learning Outcomes
 
-| 章节           | 课题                                                                        | 核心内容                                                                                                                                                                                    |
-| :------------- | :-------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Chapter 11** | [VLM 强化学习](docs/chapter11_vlm_rl/intro.md)                              | 动手使用 GRPO 训练 VLM 回答视觉问题；讨论视觉与文本特征融合下的特殊挑战与奖励分配；介绍主流 VLM RL 框架与前沿进展；探讨视觉生成模型的 RL 后训练。                                               |
-| **Chapter 12** | [连续动作算法与具身智能](docs/chapter09_continuous_control/intro.md)         | 在 PyBullet 机器人仿真中体验连续控制；解析连续策略与 DDPG/TD3；对比 SAC 算法与并行采样技术；引入 HER 解决稀疏奖励问题；探讨扩散策略在生成式连续控制中的应用；从仿真到现实的具身智能。          |
-| **Chapter 13** | [未来趋势](docs/chapter13_future_trends/intro.md)                           | 测试时计算与 RL 推理；多模态与具身智能融合；多智能体 RL 与基于模型的 RL；LLM 多智能体强化学习；自博弈与自进化学习路线；离线强化学习回顾（CQL / IQL / DT）；实战 PettingZoo 多智能体环境。    |
+After completing the course, a learner should be able to:
 
-### 附录
+- implement and explain the core reinforcement learning loop: environment interaction, rollout collection, reward feedback, policy update, and evaluation;
+- connect MDPs, value functions, Bellman equations, TD learning, policy gradients, and advantage estimates to concrete training behavior;
+- read and modify DQN, REINFORCE, Actor-Critic, PPO, DPO, GRPO, and related implementations;
+- reason about LLM post-training pipelines, including SFT, reward modeling, PPO-style RLHF, DPO-family methods, and verifiable-reward training;
+- diagnose common RL failure modes such as reward hacking, policy collapse, KL instability, non-convergence, and evaluation leakage;
+- design a reasonable algorithm and infrastructure plan for a new RL problem, including metrics, debugging strategy, and evaluation protocol.
 
-| 附录           | 课题                                                           | 说明                                                                                                                                                     |
-| :------------- | :------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Appendix A** | [强化学习训练调试指南](docs/appendix_common_pitfalls/intro.md) | 针对策略崩溃、奖励投机、资源溢出与收敛失效等常见故障，提供现象描述、理论解释与修复验证方法。                                                             |
-| **Appendix B** | [RL 工程实践指南](docs/appendix_industrial_training/intro.md)  | 涵盖 RL 采样基础设施、异步训练架构、分布式并行策略、Agentic RL 基础设施、评测体系与 Badcase 分析、训练监控与排查、工业实战练习及大模型 RL 训练指标词典。 |
-| **Appendix C** | [算法选型与工程框架](docs/appendix_algorithm_guide/intro.md)   | 算法选型决策矩阵与训练框架（含模型基方法）选型指南。                                                                                                     |
-| **Appendix D** | [强化学习经典项目](docs/appendix_game_projects/intro.md)       | 拓展视野的开源强化学习项目列表。                                                                                                                         |
-| **Appendix E** | [数学基础](docs/appendix_math/intro.md)                        | 涵盖线性代数、概率与统计、微积分与优化、信息论等强化学习所需的数学基础。                                                                                 |
-| **Appendix G** | [术语对照表](docs/appendix_terminology/intro.md)               | 中英文强化学习术语对照及简明释义。                                                                                                                       |
-| **Appendix H** | [环境安装指南](docs/appendix_env_install/intro.md)             | 课程相关工具与环境的安装配置说明。                                                                                                                       |
+## Curriculum
 
-## 本地运行环境
+The course is divided into four parts plus appendices. The online site contains the full text, diagrams, code references, and chapter-level navigation.
 
-本课程的文档站点基于 [VitePress](https://vitepress.dev/) 构建。在本地预览或贡献内容，需要以下步骤：
+### Preface
 
-### 前置要求
+| Topic                                               | Description                                                        |
+| :-------------------------------------------------- | :----------------------------------------------------------------- |
+| [写在开头](docs/preface/intro.md)                   | Course positioning, learning path, and how to use the material.    |
+| [强化学习简史](docs/preface/brief-history/index.md) | From trial-and-error learning to AlphaGo, RLHF, and LLM alignment. |
+
+### Part I: Foundations by Experiment
+
+| Chapter | Topic                                                                | Core Questions                                                                                                     |
+| :------ | :------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------- |
+| 01      | [RL 初印象：求解 CartPole](docs/chapter01_cartpole/intro.md)         | What are state, action, reward, policy, value, entropy, and training curves in a real environment?                 |
+| 02      | [现代 RL 初体验：大语言模型与 DPO 对齐](docs/chapter02_dpo/intro.md) | How does preference optimization change model behavior, and what do loss, reward margin, and reward accuracy mean? |
+| Summary | [Part I Summary](docs/summaries/part1-summary.md)                    | What intuition should be stable before entering the formal theory?                                                 |
+
+### Part II: Core Theory and Algorithms
+
+| Chapter | Topic                                                           | Core Questions                                                                                                      |
+| :------ | :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ |
+| 03      | [MDP 与价值函数](docs/chapter03_mdp/intro.md)                   | How do bandits, MDPs, value functions, Bellman equations, and TD errors formalize sequential decision-making?       |
+| 04      | [Q-Learning 与 DQN](docs/chapter04_dqn/intro.md)                | Why do replay buffers, target networks, CNN encoders, Double DQN, Dueling DQN, and Rainbow-style extensions matter? |
+| 05      | [策略梯度与 REINFORCE](docs/chapter05_policy_gradient/intro.md) | How can a policy be optimized directly, and why do baselines reduce gradient variance?                              |
+| 06      | [Actor-Critic 架构](docs/chapter06_actor_critic/intro.md)       | How do actors and critics divide the learning problem, and how does TD error become an advantage signal?            |
+| 07      | [PPO：稳定训练的艺术](docs/chapter06_ppo/intro.md)              | How do clipping, trust-region intuition, GAE, and reward models make policy optimization more stable?               |
+| Summary | [Part II Summary](docs/summaries/part2-summary.md)              | What algorithmic patterns recur across classic and modern RL?                                                       |
+
+### Part III: Reinforcement Learning for LLMs
+
+| Chapter | Topic                                                                  | Core Questions                                                                                                                   |
+| :------ | :--------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------- |
+| 08      | [RLHF 完整流水线](docs/chapter10_rlhf/intro.md)                        | How do instruction data, reward models, PPO training, RLAIF, and data cycles fit together?                                       |
+| 09      | [对齐与推理强化：DPO / GRPO / RLVR](docs/chapter07_alignment/intro.md) | How do offline preference methods, implicit rewards, group-relative advantages, and verifiable rewards train reasoning behavior? |
+| 10      | [Agentic RL](docs/chapter12_agentic_rl/intro.md)                       | How do multi-turn interaction, tool use, trajectory synthesis, and credit assignment change the RL problem?                      |
+| Summary | [Part III Summary](docs/summaries/part3-summary.md)                    | What makes LLM RL different from classic environment RL?                                                                         |
+
+### Part IV: Frontiers and Advanced Systems
+
+| Chapter | Topic                                                                | Core Questions                                                                                                              |
+| :------ | :------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------- |
+| 11      | [VLM 强化学习](docs/chapter11_vlm_rl/intro.md)                       | How do visual inputs, multimodal rewards, and VLM-specific evaluation change the training loop?                             |
+| 12      | [连续动作算法与具身智能](docs/chapter09_continuous_control/intro.md) | How do DDPG, TD3, SAC, HER, diffusion policies, and simulation-to-real concerns appear in continuous control?               |
+| 13      | [未来趋势](docs/chapter13_future_trends/intro.md)                    | How do test-time reasoning, multi-agent RL, model-based RL, offline RL, self-play, and embodied multimodal systems connect? |
+| Summary | [Part IV Summary](docs/summaries/part4-summary.md)                   | What directions should learners track after finishing the core course?                                                      |
+
+### Appendices
+
+| Appendix | Topic                                                          | Description                                                                                                        |
+| :------- | :------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------- |
+| A        | [强化学习训练调试指南](docs/appendix_common_pitfalls/intro.md) | Failure modes, symptoms, root causes, and repair strategies for RL training.                                       |
+| B        | [RL 工程实践指南](docs/appendix_industrial_training/intro.md)  | Sampling infrastructure, distributed training, monitoring, evaluation, badcase analysis, and industrial exercises. |
+| C        | [算法选型与工程框架](docs/appendix_algorithm_guide/intro.md)   | Decision matrices for algorithm selection and framework choices.                                                   |
+| D        | [强化学习经典项目](docs/appendix_game_projects/intro.md)       | Curated project references for expanding beyond the course examples.                                               |
+| E        | [数学基础](docs/appendix_math/intro.md)                        | Linear algebra, probability, statistics, optimization, and information theory for RL.                              |
+| F        | [环境安装指南](docs/appendix_env_install/intro.md)             | Tooling and environment setup notes for the course.                                                                |
+
+## Labs
+
+The [`code/`](code/) directory contains runnable examples aligned with the chapters. Each chapter is intended to be small enough to inspect, run, and modify independently.
+
+| Area                    | Code Path                                                                                                                                    | Representative Exercises                                                                  |
+| :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
+| Classic control         | [`code/chapter01_cartpole/`](code/chapter01_cartpole/)                                                                                       | Train CartPole, inspect rewards and episode length, compare PPO implementations.          |
+| Preference tuning       | [`code/chapter02_dpo/`](code/chapter02_dpo/)                                                                                                 | Generate preference data, train with DPO, compare model behavior before and after tuning. |
+| MDPs and value learning | [`code/chapter03_mdp/`](code/chapter03_mdp/)                                                                                                 | Run bandit policies, solve GridWorld, verify Bellman updates numerically.                 |
+| Deep Q-learning         | [`code/chapter04_dqn/`](code/chapter04_dqn/)                                                                                                 | Implement replay buffers, target networks, and Double DQN variants.                       |
+| Policy gradients        | [`code/chapter05_policy_gradient/`](code/chapter05_policy_gradient/)                                                                         | Compare REINFORCE, baseline variants, and Actor-Critic updates.                           |
+| PPO                     | [`code/chapter06_ppo/`](code/chapter06_ppo/)                                                                                                 | Train LunarLander, inspect clipping, visualize GAE, and compare training stability.       |
+| Alignment and RLVR      | [`code/chapter07_alignment/`](code/chapter07_alignment/), [`code/chapter08_grpo_rlvr/`](code/chapter08_grpo_rlvr/)                           | Explore DPO rewards, GRPO group advantages, and rule-based verifiable rewards.            |
+| RLHF                    | [`code/chapter10_rlhf/`](code/chapter10_rlhf/)                                                                                               | Walk through SFT, reward model training, and PPO-style alignment.                         |
+| VLM and agents          | [`code/chapter11_vlm_rl/`](code/chapter11_vlm_rl/), [`code/chapter12_agentic_rl/`](code/chapter12_agentic_rl/)                               | Build multimodal reward functions and tool-use agents.                                    |
+| Advanced topics         | [`code/chapter09_continuous_control/`](code/chapter09_continuous_control/), [`code/chapter13_future_trends/`](code/chapter13_future_trends/) | Study continuous control, tree-of-thought search, and multi-agent RL.                     |
+
+See [`code/README.md`](code/README.md) for the code index and per-chapter dependency notes.
+
+## Recommended Study Path
+
+A practical path through the repository:
+
+1. Read the [course introduction](docs/preface/intro.md) and run the CartPole example.
+2. Skim the DPO chapter early, even before the full theory, to anchor the LLM post-training motivation.
+3. Work through Chapters 03-07 in order; this is the conceptual core.
+4. Return to RLHF, DPO, GRPO, and RLVR with the policy-gradient and PPO machinery in place.
+5. Use the debugging and engineering appendices whenever a training run behaves unexpectedly.
+6. Treat the frontier chapters as extensions: VLM RL, Agentic RL, continuous control, multi-agent systems, and test-time reasoning.
+
+## Getting Started
+
+### Read Online
+
+The published course site is available at:
+
+```text
+https://walkinglabs.github.io/hands-on-modern-rl/
+```
+
+### Run the Documentation Site Locally
+
+Requirements:
 
 - Node.js >= 18.0.0
-
-### 安装与启动
+- npm
 
 ```bash
 git clone https://github.com/walkinglabs/hands-on-modern-rl.git
@@ -118,52 +197,120 @@ npm install
 npm run dev
 ```
 
-启动后访问 `http://localhost:5173` 即可浏览课程内容。
+Then open the local VitePress server shown in the terminal, typically:
 
-### 常用命令
-
-```bash
-npm run build    # 构建静态站点
-npm run preview  # 本地预览构建产物
-npm run verify   # 构建检查（提交 PR 前请务必执行）
-npm run format   # 代码格式化
-npm run lint     # 代码规范检查
+```text
+http://localhost:5173
 ```
 
-## 仓库结构
+### Verify the Site
+
+Before opening a pull request that changes documentation structure, theme code, navigation, build scripts, or generated assets, run:
+
+```bash
+npm run verify
+```
+
+This checks formatting, lints the VitePress theme, builds the site, and verifies the expected build artifacts.
+
+### Run the Course Code
+
+Most code examples are Python-based and organized by chapter.
+
+```bash
+cd code
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+For smaller installs, prefer a chapter-specific requirements file:
+
+```bash
+pip install -r chapter01_cartpole/requirements.txt
+python chapter01_cartpole/1-ppo_cartpole.py
+```
+
+Some chapters may require additional system libraries, GPU support, model downloads, or environment-specific setup. Prefer starting with Chapter 01 before running LLM, VLM, or simulator-heavy examples.
+
+## Repository Layout
 
 ```text
 hands-on-modern-rl/
-├── docs/                      # 课程文档（VitePress）
-│   ├── .vitepress/            # 站点配置与自定义组件
-│   ├── public/                # 静态资源
-│   ├── preface/               # 前言与导论
-│   ├── chapter*/              # 各章节 Markdown 文件
-│   ├── appendix*/             # 附录与补充材料
-│   └── summaries/             # 各篇总结
-├── scripts/                   # 自动化脚本（站点地图生成等）
-├── .github/workflows/         # CI/CD 配置
-├── package.json               # 项目配置
-└── AGENTS.md                  # 仓库维护规则
+├── docs/                      # VitePress course content
+│   ├── .vitepress/            # Site config, navigation, theme overrides
+│   ├── public/                # Static assets copied to the built site
+│   ├── preface/               # Course introduction and historical context
+│   ├── chapter*/              # Main course chapters
+│   ├── appendix*/             # Supplementary material and references
+│   └── summaries/             # Part-level reviews and synthesis notes
+├── code/                      # Runnable chapter-aligned examples
+├── scripts/                   # Maintenance and verification scripts
+├── .github/workflows/         # GitHub Pages deployment workflow
+├── package.json               # Site scripts and dependencies
+├── AGENTS.md                  # Repository maintenance guidelines
+└── README.md                  # Project overview
 ```
 
-## 参与贡献
+## Development Commands
 
-欢迎通过 Pull Request 或 Issue 参与本课程的改进。为保证协作效率，请注意以下几点：
+```bash
+npm run dev           # Start local documentation server
+npm run build         # Build the static site
+npm run preview       # Preview the built site locally
+npm run format        # Format repository files with Prettier
+npm run format:check  # Check formatting
+npm run lint          # Lint VitePress theme code
+npm run verify        # Run format check, lint, build, and artifact checks
+```
 
-1. **保持单一职责**：每个 PR 聚焦于一个明确的改动，避免混合不相关的修改。
-2. **遵循目录命名规范**：在 `docs/` 下新增内容时，使用连字符命名法（如 `chapter16-new-topic`），并以 `index.md` 作为入口文件。
-3. **提交前验证**：若修改涉及 `.vitepress/config.mjs` 或构建脚本，请运行 `npm run verify` 确认无破坏性变更。
-4. **Commit 规范**：遵循 [Conventional Commits](https://www.conventionalcommits.org/)（如 `feat:`, `fix:`, `docs:`, `chore:`）。
+## Contributing
 
-详细的维护与协作规则参见 [AGENTS.md](./AGENTS.md)。
+Contributions should make the course clearer, more correct, more reproducible, or easier to navigate.
 
-## 许可协议
+Good contributions include:
 
-本课程内容基于 [CC BY-NC-SA 4.0（署名-非商业性使用-相同方式共享 4.0 国际）](./LICENSE) 协议发布。
+- fixing conceptual errors, equations, diagrams, broken links, or typos;
+- improving explanations without changing the intended learning path;
+- adding small, reproducible experiments that clarify an existing chapter;
+- improving scripts, build reliability, navigation, or accessibility;
+- adding references to high-quality papers, official docs, or widely used open-source implementations.
+
+Please keep pull requests focused. A good PR usually changes one chapter, one lab, one diagram group, or one infrastructure concern at a time.
+
+When adding content:
+
+1. Put course material under [`docs/`](docs/).
+2. Use kebab-case for new directories and files.
+3. Prefer directory-based routes with `index.md`.
+4. Update [`docs/.vitepress/config.mjs`](docs/.vitepress/config.mjs) when adding navigable pages.
+5. Run `npm run verify` before requesting review when the change touches config, theme, scripts, or generated site output.
+6. Use Conventional Commits, for example `docs: clarify ppo clipping` or `fix: repair chapter link`.
+
+For repository-specific maintenance rules, see [`AGENTS.md`](AGENTS.md).
+
+## Citation
+
+If you use this course in teaching material, study notes, or derivative non-commercial educational work, please cite the repository:
+
+```bibtex
+@misc{hands_on_modern_rl,
+  title        = {Hands-On Modern RL: Practice-first reinforcement learning from CartPole to LLM post-training and agentic systems},
+  author       = {WalkingLabs},
+  year         = {2026},
+  howpublished = {\url{https://github.com/walkinglabs/hands-on-modern-rl}},
+  note         = {Open courseware repository}
+}
+```
+
+## License
+
+The course material is released under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](LICENSE).
+
+You may share and adapt the material for non-commercial purposes, provided that appropriate credit is given and derivative work is distributed under the same license.
 
 ---
 
 <div align="center">
-  <sub>Maintained by WalkingLabs and the open-source community.</sub>
+  <sub>Maintained by WalkingLabs and contributors.</sub>
 </div>
