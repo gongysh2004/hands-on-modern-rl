@@ -141,7 +141,6 @@ The course is divided into four parts plus appendices. The online site contains 
 | C        | [算法选型与工程框架](docs/appendix_algorithm_guide/intro.md)   | Decision matrices for algorithm selection and framework choices.                                                   |
 | D        | [强化学习经典项目](docs/appendix_game_projects/intro.md)       | Curated project references for expanding beyond the course examples.                                               |
 | E        | [数学基础](docs/appendix_math/intro.md)                        | Linear algebra, probability, statistics, optimization, and information theory for RL.                              |
-| F        | [环境安装指南](docs/appendix_env_install/intro.md)             | Tooling and environment setup notes for the course.                                                                |
 
 ## Labs
 
