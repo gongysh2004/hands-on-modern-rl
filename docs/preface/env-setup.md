@@ -47,7 +47,7 @@ print("最小环境验证通过！")
 ```
 
 ::: details 没有 GPU 也能跑
-课程前半部分（CartPole、DQN 等）CPU 即可训练，不强制要求 GPU。后半部分 LLM 微调（Ch7-Ch10）建议至少 8 GB 显存，也可以用 [Google Colab](https://colab.research.google.com/) 免费 GPU 完成。
+课程前半部分（CartPole、DQN 等）CPU 即可训练，不强制要求 GPU。后半部分 LLM 微调（Ch7-Ch10）建议至少 24 GB 显存，也可以用 [Google Colab](https://colab.research.google.com/) 免费 GPU 完成。
 :::
 
 ---
@@ -383,9 +383,9 @@ print("=" * 45 + "\n")
 | stable-baselines3 | 2.2+     | 封装好的 RL 算法                | Ch1, Ch4-Ch6 |
 | numpy             | 1.24+    | 数值计算                        | 全书         |
 | matplotlib        | 3.7+     | 可视化绘图                      | 全书         |
-| pybullet          | 3.2+     | 机器人仿真                      | Ch11          |
-| mujoco            | 3.0+     | 高精度物理仿真                  | Ch11          |
-| isaacsim          | 4.0+     | GPU 并行机器人仿真（Isaac Lab） | Ch11, Ch12    |
+| pybullet          | 3.2+     | 机器人仿真                      | Ch11         |
+| mujoco            | 3.0+     | 高精度物理仿真                  | Ch11         |
+| isaacsim          | 4.0+     | GPU 并行机器人仿真（Isaac Lab） | Ch11, Ch12   |
 | mlagents          | 1.0+     | Unity 3D 游戏 RL 环境           | 附录         |
 | ale-py            | 0.8+     | Atari 模拟器                    | Ch4          |
 | transformers      | 4.45+    | LLM 模型加载                    | Ch7-Ch10     |

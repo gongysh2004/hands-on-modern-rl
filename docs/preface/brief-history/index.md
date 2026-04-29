@@ -40,6 +40,7 @@ $$V(s_t) \leftarrow V(s_t) + \alpha \left[ \underbrace{r_{t+1} + \gamma V(s_{t+1
 $$Q(s_t, a_t) \leftarrow Q(s_t, a_t) + \alpha \left[ r_{t+1} + \gamma \max_{a'} Q(s_{t+1}, a') - Q(s_t, a_t) \right]$$
 
 Q-Learning 的精妙之处在于：它直接学习**动作价值函数** $Q(s,a)$——在状态 $s$ 下执行动作 $a$ 到底"值多少分"。有了这个打分表，智能体只需要在每个状态贪心地选得分最高的动作 $\arg\max_a Q(s,a)$ 就能做出最优决策。
+
 - **1992 年**，IBM 的杰拉尔德·特萨罗（Gerald Tesauro）开发了 **TD-Gammon** [^4]。通过将 TD 算法与一个浅层神经网络结合，它在西洋双陆棋中达到了人类世界冠军的水平。这是神经网络与 RL 结合的早期成功典范。
 
 ![TD-Gammon / Backgammon](./images/backgammon.jpg)
@@ -101,6 +102,7 @@ $$\max_\theta \; \mathbb{E}_{x \sim \mathcal{D}, y \sim \pi_\theta(\cdot|x)} \le
 $$\mathcal{L}_{\text{DPO}}(\theta) = -\mathbb{E}_{(x, y_w, y_l)} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)} \right) \right]$$
 
 其中 $y_w$（winner）和 $y_l$（loser）分别是人类标注的"好回答"和"差回答"，$\sigma$ 是 sigmoid 函数。这个公式优雅地将 RLHF 中隐含的奖励模型直接消去了——模型只需要学会"好回答的概率相对提升，差回答的概率相对下降"。DPO 极大地降低了 RLHF 的工程门槛，迅速席卷了开源社区。
+
 - **2024 - 2025 年**，随着 OpenAI o1 和 DeepSeek-R1 [^11] 等推理模型的惊艳亮相，强化学习再次进化。特别是 **DeepSeek-R1-Zero 证明了在有明确客观规则（如数学对错、代码编译）的场景下，完全可以抛弃传统的 SFT（监督微调）冷启动，直接让 Base 模型进行纯粹的强化学习（Pure RL）。** 这一过程不仅打破了"必须先 SFT 才能做 RL"的刻板印象，更让模型自主涌现出了长思维链（CoT）和顿悟（a-ha moment）能力。DeepSeek 采用的 **GRPO（群体相对策略优化）** 算法，去除了传统 PPO 中极其消耗显存的 Critic 网络，直接通过组内相对奖励来优化策略。GRPO 的核心思路是：对同一个 prompt $q$ 采样一组回答 $\{o_1, o_2, \ldots, o_G\}$，用组内均值和标准差对奖励做归一化后作为优势估计：
 
 $$\tilde{r}_i = \frac{r_i - \text{mean}(r_1, \ldots, r_G)}{\text{std}(r_1, \ldots, r_G)}$$
