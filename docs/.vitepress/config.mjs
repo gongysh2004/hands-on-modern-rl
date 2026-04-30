@@ -726,7 +726,14 @@ const zhSidebar = {
           items: [
             {
               text: '12.1 具身智能',
-              link: '/chapter13_future_trends/embodied-intelligence/'
+              link: '/chapter13_future_trends/embodied-intelligence/',
+              collapsed: false,
+              items: [
+                {
+                  text: '12.1.1 基于模型的 RL',
+                  link: '/chapter13_future_trends/embodied-intelligence/model-based-rl/'
+                }
+              ]
             },
             {
               text: '12.2 Self-Play 与自进化',
@@ -812,7 +819,7 @@ const zhSidebar = {
               link: '/appendix_algorithm_guide/algorithm-selection'
             },
             {
-              text: 'C.2 训练框架与模型基方法',
+              text: 'C.2 训练框架',
               link: '/appendix_algorithm_guide/framework-mbrl'
             }
           ]

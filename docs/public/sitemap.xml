@@ -8,13 +8,13 @@
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/appendix_algorithm_guide/framework-mbrl/</loc>
-    <lastmod>2026-04-19T06:06:25.083Z</lastmod>
+    <lastmod>2026-04-30T15:18:23.611Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/appendix_algorithm_guide/intro/</loc>
-    <lastmod>2026-04-19T06:06:51.453Z</lastmod>
+    <lastmod>2026-04-30T15:22:02.103Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -92,7 +92,7 @@
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/appendix_industrial_training/rl-infrastructure/</loc>
-    <lastmod>2026-04-29T08:28:38.210Z</lastmod>
+    <lastmod>2026-04-30T18:02:24.505Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -518,7 +518,7 @@
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter06_ppo/ppo-math/</loc>
-    <lastmod>2026-04-29T09:25:58.247Z</lastmod>
+    <lastmod>2026-04-30T17:52:55.724Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -536,7 +536,7 @@
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter07_alignment/dpo-theory-and-family/</loc>
-    <lastmod>2026-04-29T08:28:39.591Z</lastmod>
+    <lastmod>2026-04-30T17:52:55.992Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -554,7 +554,7 @@
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter08_grpo_rlvr/grpo-practice-and-mechanism/</loc>
-    <lastmod>2026-04-19T05:44:06.259Z</lastmod>
+    <lastmod>2026-04-30T17:59:23.506Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -620,31 +620,31 @@
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter11_vlm_rl/intro/</loc>
-    <lastmod>2026-04-27T15:33:34.938Z</lastmod>
+    <lastmod>2026-04-30T15:53:53.668Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter11_vlm_rl/visual-generation-rl/</loc>
-    <lastmod>2026-04-29T08:28:40.072Z</lastmod>
+    <lastmod>2026-04-30T17:59:28.940Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter11_vlm_rl/vlm-challenges/</loc>
-    <lastmod>2026-04-19T06:10:32.711Z</lastmod>
+    <lastmod>2026-04-30T16:44:00.817Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter11_vlm_rl/vlm-frameworks/</loc>
-    <lastmod>2026-04-29T08:28:40.119Z</lastmod>
+    <lastmod>2026-04-30T16:44:00.850Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter11_vlm_rl/vlm-grpo-hands-on/</loc>
-    <lastmod>2026-04-19T06:11:10.728Z</lastmod>
+    <lastmod>2026-04-30T16:16:46.953Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -716,19 +716,25 @@
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter13_future_trends/embodied-intelligence/</loc>
-    <lastmod>2026-04-29T08:46:05.935Z</lastmod>
+    <lastmod>2026-04-30T15:19:25.892Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter13_future_trends/embodied-intelligence/model-based-rl/</loc>
+    <lastmod>2026-04-30T16:55:01.156Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter13_future_trends/embodied-multimodal/</loc>
-    <lastmod>2026-04-29T08:28:40.796Z</lastmod>
+    <lastmod>2026-04-30T15:26:36.973Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://walkinglabs.github.io/hands-on-modern-rl/chapter13_future_trends/intro/</loc>
-    <lastmod>2026-04-29T09:25:52.563Z</lastmod>
+    <lastmod>2026-04-30T15:22:02.125Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
