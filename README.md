@@ -119,6 +119,7 @@
 - [仓库结构](#仓库结构)
 - [开发命令](#开发命令)
 - [参与贡献](#参与贡献)
+- [其他课程](#其他课程)
 - [引用](#引用)
 - [开源协议](#开源协议)
 
@@ -473,6 +474,12 @@ npm run verify        # 运行格式检查、Lint、构建和产物验证
 6. 使用 Conventional Commits 规范，例如 `docs: clarify ppo clipping` 或 `fix: repair chapter link`。
 
 有关特定于本仓库的维护规则，请参阅 [`AGENTS.md`](AGENTS.md)。
+
+## 其他课程
+
+我们的团队还制作了其他课程！请查看：
+
+[![LEARN HARNESS ENGINEERING](https://img.shields.io/badge/LEARN_HARNESS_ENGINEERING-0052cc?style=for-the-badge)](https://github.com/walkinglabs/learn-harness-engineering)
 
 ## 引用
 
