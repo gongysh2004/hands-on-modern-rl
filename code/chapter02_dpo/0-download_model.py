@@ -30,9 +30,12 @@ def download_model():
 
     print(f"正在从 ModelScope 下载模型 {MODEL_ID} ...")
     print("模型约 1GB，请耐心等待。")
+    # 用 local_dir 而不是 cache_dir：cache_dir 会按 repo 路径再嵌套
+    # 一层（./Qwen2.5-0.5B-Instruct/Qwen/Qwen2___5-0___5B-Instruct/），
+    # 导致后续脚本从 LOCAL_MODEL_DIR 加载时找不到 config.json。
     model_dir = snapshot_download(
         MODEL_ID,
-        cache_dir=LOCAL_MODEL_DIR,
+        local_dir=LOCAL_MODEL_DIR,
     )
     print(f"模型下载完成，保存至：{model_dir}")
     return model_dir
