@@ -953,6 +953,22 @@ const zhSidebar = {
             {
               text: 'C.4 GRPO 与 Reward Model',
               link: '/appendix_code_cheatsheet/grpo-rlvr'
+            },
+            {
+              text: 'C.5 Softmax 与 Cross-Entropy',
+              link: '/appendix_code_cheatsheet/softmax-ce'
+            },
+            {
+              text: 'C.6 Top-k / Top-p Sampling',
+              link: '/appendix_code_cheatsheet/top-k-top-p'
+            },
+            {
+              text: 'C.7 Attention / MHA / GQA',
+              link: '/appendix_code_cheatsheet/attention-mha'
+            },
+            {
+              text: 'C.8 DAPO',
+              link: '/appendix_code_cheatsheet/dapo'
             }
           ]
         },
