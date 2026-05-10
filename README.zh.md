@@ -258,7 +258,7 @@
 | 4.3  | [LunarLander 训练分析](docs/chapter04_dqn/training-analysis.md)                | DQN 训练曲线和 Q 值变化暴露了哪些学习现象？                     |
 | 4.4  | [LunarLander 实战](docs/chapter04_dqn/lunar-lander.md)                         | DQN 在更完整的控制任务上如何落地和调参？                        |
 | 4.5  | [深度 Q 网络家族](docs/chapter04_dqn/dqn-family.md)                            | DQN 家族如何逐步修复高估、表示和采样问题？                      |
-| 4.6  | [视觉游戏项目](docs/chapter04_dqn/visual-game-projects.md)                     | 从低维控制到视觉游戏时，DQN 工程要改什么？                      |
+| 4.6  | [动手：视觉游戏项目](docs/chapter04_dqn/visual-game-projects.md)              | 从低维控制到视觉游戏时，DQN 工程要改什么？                      |
 | 05   | [策略梯度与 REINFORCE](docs/chapter05_policy_gradient/intro.md)                | 如何直接优化策略，为什么基线（baselines）能减少梯度方差？       |
 | 5.1  | [动手：摇骰子赌博机](docs/chapter05_policy_gradient/dice-game.md)              | 如何用最小实验理解策略梯度的采样更新？                          |
 | 5.2  | [策略梯度与 REINFORCE](docs/chapter05_policy_gradient/policy-gradient.md)      | REINFORCE 如何把高回报动作的概率推高？                          |
