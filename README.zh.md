@@ -277,33 +277,33 @@
 
 ### 第三部分：大模型 RL
 
-| 章节 | 主题                                                               | 核心问题                                                       |
-| :--- | :----------------------------------------------------------------- | :------------------------------------------------------------- |
-| 08   | [RLHF 全流程](docs/chapter08_rlhf/intro.md)                        | 指令数据、奖励模型、PPO 训练、评估与扩展如何结合在一起？       |
-| 8.1  | [从模型到助手](docs/chapter08_rlhf/base-model-to-assistant.md)     | 预训练模型和助手模型之间差在哪？                               |
-| 8.2  | [RLHF 流水线](docs/chapter08_rlhf/standard-rlhf-pipeline.md)       | SFT、RM 和 RL 三阶段如何衔接？                                 |
-| 8.3  | [指令微调](docs/chapter08_rlhf/imitation-learning-pipeline.md)     | 监督微调如何建立基础指令跟随能力？                             |
-| 8.4  | [奖励模型](docs/chapter08_rlhf/reward-function-design.md)          | 奖励模型如何把人类偏好变成可优化信号？                         |
-| 8.5  | [PPO 微调](docs/chapter08_rlhf/ppo-rlhf-loop.md)                   | PPO 如何在 KL 约束下优化语言模型？                             |
-| 8.6  | [评估效果](docs/chapter08_rlhf/evaluation.md)                      | 如何判断对齐训练真的改善了模型？                               |
-| 8.7  | [扩展到大模型](docs/chapter08_rlhf/scaling-to-large-models.md)     | 同一条 RLHF 流水线放大时会遇到哪些工程问题？                   |
-| 8.8  | [奖励黑客](docs/chapter08_rlhf/extended-practice.md)               | 如何识别奖励投机，并让数据迭代持续改进模型？                   |
-| 09   | [后训练对齐](docs/chapter09_alignment/intro.md)                    | DPO、GRPO、DeepSeek-R1、可验证奖励（RLVR）如何训练推理行为？   |
-| 9.1  | [偏好优化方法](docs/chapter09_alignment/dpo-theory-and-family.md)  | 偏好优化家族如何绕过显式奖励模型？                             |
-| 9.2  | [DPO 实验](docs/chapter09_alignment/dpo-hands-on.md)               | 如何跑通一个可检查的 DPO 训练实验？                            |
-| 9.3  | [GRPO](docs/chapter09_grpo_rlvr/grpo-practice-and-mechanism.md)    | GRPO 如何用组内相对优势替代 Critic？                           |
-| 9.4  | [R1 与 DAPO](docs/chapter09_grpo_rlvr/deepseek-dapo.md)            | 推理模型训练中有哪些新的 RL 经验？                             |
-| 9.5  | [可验证奖励](docs/chapter09_grpo_rlvr/rlvr.md)                     | 规则可判定任务如何为 RL 提供稳定奖励？                         |
-| 9.6  | [策略蒸馏](docs/chapter09_grpo_rlvr/on-policy-distillation.md)     | 如何把在线 RL 行为蒸馏回更可用的模型？                         |
-| 9.7  | [后训练实践](docs/chapter09_alignment/industrial-post-training.md) | 大模型后训练在数据、奖励、评估和工程闭环中如何落地？           |
-| 10   | [Agentic RL](docs/chapter10_agentic_rl/intro.md)                   | 多轮交互、工具调用、轨迹合成与智能体系统工程如何改变 RL 问题？ |
-| 10.1 | [多轮交互](docs/chapter10_agentic_rl/multi-turn-rl.md)             | 多步任务中如何把最终结果分配回中间动作？                       |
-| 10.2 | [工具调用](docs/chapter10_agentic_rl/tool-use-and-trajectory.md)   | 工具执行结果如何进入 RL 轨迹和训练数据？                       |
-| 10.3 | [评测与案例](docs/chapter10_agentic_rl/industrial-evaluation.md)   | Agentic RL 在工程评测中最常见的失败点是什么？                  |
-| 10.4 | [Code Agent](docs/chapter10_agentic_rl/multi-tool-code-agent.md)   | 如何训练模型在搜索、写代码和测试之间切换？                     |
-| 10.5 | [Deep Research](docs/chapter10_agentic_rl/deep-research-agent.md)  | 深度研究型智能体如何组织搜索、引用和答案质量奖励？             |
-| 10.6 | [延伸阅读](docs/chapter10_agentic_rl/extended-readings.md)         | 继续深入 Agentic RL 应该读哪些资料？                           |
-| 总结 | [本篇小结](docs/summaries/part3-summary.md)                        | 什么让 LLM 的强化学习不同于经典环境的强化学习？                |
+| 章节 | 主题                                                               | 核心问题                                                           |
+| :--- | :----------------------------------------------------------------- | :----------------------------------------------------------------- |
+| 08   | [RLHF 全流程](docs/chapter08_rlhf/intro.md)                        | 指令数据、奖励模型、PPO 训练、评估与扩展如何结合在一起？           |
+| 8.1  | [从模型到助手](docs/chapter08_rlhf/base-model-to-assistant.md)     | 预训练模型和助手模型之间差在哪？                                   |
+| 8.2  | [RLHF 流水线](docs/chapter08_rlhf/standard-rlhf-pipeline.md)       | SFT、RM 和 RL 三阶段如何衔接？                                     |
+| 8.3  | [指令微调](docs/chapter08_rlhf/imitation-learning-pipeline.md)     | 监督微调如何建立基础指令跟随能力？                                 |
+| 8.4  | [奖励模型](docs/chapter08_rlhf/reward-function-design.md)          | 奖励模型如何把人类偏好变成可优化信号？                             |
+| 8.5  | [PPO 微调](docs/chapter08_rlhf/ppo-rlhf-loop.md)                   | PPO 如何在 KL 约束下优化语言模型？                                 |
+| 8.6  | [评估效果](docs/chapter08_rlhf/evaluation.md)                      | 如何判断对齐训练真的改善了模型？                                   |
+| 8.7  | [扩展到大模型](docs/chapter08_rlhf/scaling-to-large-models.md)     | 同一条 RLHF 流水线放大时会遇到哪些工程问题？                       |
+| 8.8  | [奖励黑客](docs/chapter08_rlhf/extended-practice.md)               | 如何识别奖励投机，并让数据迭代持续改进模型？                       |
+| 09   | [后训练对齐](docs/chapter09_alignment/intro.md)                    | DPO、GRPO、DeepSeek-R1、可验证奖励（RLVR）如何训练推理行为？       |
+| 9.1  | [偏好优化方法](docs/chapter09_alignment/dpo-theory-and-family.md)  | 偏好优化家族如何绕过显式奖励模型？                                 |
+| 9.2  | [DPO 实验](docs/chapter09_alignment/dpo-hands-on.md)               | 如何跑通一个可检查的 DPO 训练实验？                                |
+| 9.3  | [GRPO](docs/chapter09_grpo_rlvr/grpo-practice-and-mechanism.md)    | GRPO 如何用组内相对优势替代 Critic？                               |
+| 9.4  | [R1 与 DAPO](docs/chapter09_grpo_rlvr/deepseek-dapo.md)            | 推理模型训练中有哪些新的 RL 经验？                                 |
+| 9.5  | [可验证奖励](docs/chapter09_grpo_rlvr/rlvr.md)                     | 规则可判定任务如何为 RL 提供稳定奖励？                             |
+| 9.6  | [策略蒸馏](docs/chapter09_grpo_rlvr/on-policy-distillation.md)     | 如何把在线 RL 行为蒸馏回更可用的模型？                             |
+| 9.7  | [后训练实践](docs/chapter09_alignment/industrial-post-training.md) | 大模型后训练在数据、奖励、评估和工程闭环中如何落地？               |
+| 10   | [Agentic RL](docs/chapter10_agentic_rl/intro.md)                   | 多轮交互、工具调用、轨迹合成与智能体系统工程如何改变 RL 问题？     |
+| 10.1 | [多轮交互](docs/chapter10_agentic_rl/multi-turn-rl.md)             | 多步任务中如何把最终结果分配回中间动作？                           |
+| 10.2 | [工具调用](docs/chapter10_agentic_rl/tool-use-and-trajectory.md)   | 工具执行结果如何进入 RL 轨迹和训练数据？                           |
+| 10.3 | [评测与案例](docs/chapter10_agentic_rl/industrial-evaluation.md)   | Agentic RL 在工程评测中最常见的失败点是什么？                      |
+| 10.4 | [rLLM DeepCoder](docs/chapter10_agentic_rl/rllm-deepcoder-lab.md)  | 用 rLLM 框架训练代码生成 Agent：AgentFlow + sandbox 验证 + GRPO RL |
+| 10.5 | [Deep Research](docs/chapter10_agentic_rl/deep-research-agent.md)  | 深度研究型智能体如何组织搜索、引用和答案质量奖励？                 |
+| 10.6 | [延伸阅读](docs/chapter10_agentic_rl/extended-readings.md)         | 继续深入 Agentic RL 应该读哪些资料？                               |
+| 总结 | [本篇小结](docs/summaries/part3-summary.md)                        | 什么让 LLM 的强化学习不同于经典环境的强化学习？                    |
 
 ### 第四部分：前沿与高级系统
 

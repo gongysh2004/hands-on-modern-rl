@@ -661,16 +661,24 @@ const zhSidebar = {
           collapsed: false,
           items: [
             {
-              text: '5.1 动手：摇骰子赌博机',
-              link: '/chapter05_policy_gradient/dice-game'
+              text: '5.1 为什么需要策略梯度',
+              link: '/chapter05_policy_gradient/pg-necessity'
             },
             {
               text: '5.2 策略梯度定理与 REINFORCE',
-              link: '/chapter05_policy_gradient/policy-gradient'
+              link: '/chapter05_policy_gradient/reinforce'
             },
             {
-              text: '5.3 动手：Baseline 降方差',
-              link: '/chapter05_policy_gradient/baseline-experiment'
+              text: '5.3 动手：策略梯度实战 CartPole',
+              link: '/chapter05_policy_gradient/cartpole'
+            },
+            {
+              text: '5.4 策略梯度的方差与基线',
+              link: '/chapter05_policy_gradient/pg-improvements'
+            },
+            {
+              text: '5.5 动手：带基线的策略梯度',
+              link: '/chapter05_policy_gradient/cartpole-baseline'
             }
           ]
         },
@@ -684,7 +692,7 @@ const zhSidebar = {
               link: '/chapter06_actor_critic/advantage-function'
             },
             {
-              text: '6.2 训练 Critic',
+              text: '6.2 Critic 训练',
               link: '/chapter06_actor_critic/critic-training'
             },
             {
@@ -692,8 +700,16 @@ const zhSidebar = {
               link: '/chapter06_actor_critic/actor-critic'
             },
             {
-              text: '6.4 AlphaGo 小项目',
-              link: '/chapter06_actor_critic/alphago'
+              text: '6.4 Actor-Critic 的前沿大规模应用',
+              link: '/chapter06_actor_critic/ac-frontier'
+            },
+            {
+              text: '6.5 动手：Pendulum 摆杆平衡',
+              link: '/chapter06_actor_critic/pendulum'
+            },
+            {
+              text: '6.6 动手：BipedalWalker 双足行走',
+              link: '/chapter06_actor_critic/bipedalwalker'
             }
           ]
         },
@@ -703,24 +719,28 @@ const zhSidebar = {
           collapsed: false,
           items: [
             {
-              text: '7.1 训练 LunarLander',
-              link: '/chapter07_ppo/ppo-lunar-lander'
-            },
-            {
-              text: '7.2 BipedalWalker 连续控制',
+              text: '7.1 动手：BipedalWalker 连续控制',
               link: '/chapter07_ppo/ppo-bipedal-walker'
             },
             {
-              text: '7.3 PPO 推导',
+              text: '7.2 PPO 推导',
               link: '/chapter07_ppo/ppo-math'
             },
             {
-              text: '7.4 信任域与裁剪',
+              text: '7.3 信任域与裁剪机制',
               link: '/chapter07_ppo/trust-region-clipping'
             },
             {
-              text: '7.5 GAE 与奖励模型',
+              text: '7.4 优势估计与奖励模型',
               link: '/chapter07_ppo/gae-reward-model'
+            },
+            {
+              text: '7.5 PPO 游戏项目实践导论',
+              link: '/chapter07_ppo/ppo-game-benchmark'
+            },
+            {
+              text: '7.6 长程任务中的 RL',
+              link: '/chapter07_ppo/rl-long-horizon-planning'
             }
           ]
         },
@@ -822,15 +842,19 @@ const zhSidebar = {
               link: '/chapter10_agentic_rl/industrial-evaluation'
             },
             {
-              text: '10.4 Code Agent',
-              link: '/chapter10_agentic_rl/multi-tool-code-agent'
+              text: '10.4 动手：rLLM DeepCoder',
+              link: '/chapter10_agentic_rl/rllm-deepcoder-lab'
             },
             {
               text: '10.5 Deep Research',
               link: '/chapter10_agentic_rl/deep-research-agent'
             },
             {
-              text: '10.6 延伸阅读',
+              text: '10.6 实现训练系统',
+              link: '/chapter10_agentic_rl/build-agentic-training-system'
+            },
+            {
+              text: '10.7 延伸阅读',
               link: '/chapter10_agentic_rl/extended-readings'
             }
           ]
@@ -861,6 +885,10 @@ const zhSidebar = {
             {
               text: '11.4 视觉生成',
               link: '/chapter11_vlm_rl/visual-generation-rl'
+            },
+            {
+              text: '11.5 动手：GeoQA',
+              link: '/chapter11_vlm_rl/easyr1-geoqa'
             }
           ]
         },
