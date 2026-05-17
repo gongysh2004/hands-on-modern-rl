@@ -183,15 +183,7 @@ $$J(\theta) = \mathbb{E}_{\pi_\theta}\left[G_t\right], \quad \theta^* = \arg\max
 
 <div align="center" style="margin: 2.5rem 0;">
 
-```mermaid
-graph TD
-    A["环境 (Environment)"] -->|"状态 s"| B["演员 (Actor)<br/>决定动作 a"]
-    A -->|"状态 s"| C["评委 (Critic)<br/>估计价值 V(s)"]
-    A -->|"奖励 r"| C
-    B -->|"动作 a"| A
-    C -->|"TD 误差 (打分)"| B
-
-```
+<img src="./images/actor-critic.svg" alt="Actor-Critic 架构示意图" style="max-width: 460px; width: 100%;">
 
 </div>
 

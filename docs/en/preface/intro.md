@@ -185,15 +185,7 @@ This book primarily focuses on **Model-Free** algorithms (such as DQN, PPO, DPO,
 
 <div align="center" style="margin: 2.5rem 0;">
 
-```mermaid
-graph TD
-    A["Environment"] -->|"state s"| B["Actor<br/>decides action a"]
-    A -->|"state s"| C["Critic<br/>estimates value V(s)"]
-    A -->|"reward r"| C
-    B -->|"action a"| A
-    C -->|"TD error (score)"| B
-
-```
+<img src="./images/actor-critic.svg" alt="Actor-Critic architecture diagram" style="max-width: 460px; width: 100%;">
 
 </div>
 
