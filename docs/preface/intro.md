@@ -66,15 +66,9 @@
 
 强化学习的交互过程是一个不断重复的循环：
 
-<div align="center" style="margin: 2.5rem 0;">
-
-```mermaid
-graph LR
-    A["智能体 Agent"] -->|"动作 aₜ"| B["环境 Environment"]
-    B -->|"状态 sₜ₊₁ + 奖励 rₜ₊₁"| A
-```
-
-</div>
+$$
+\text{智能体} \underset{\text{状态 } s_{t+1} + \text{奖励 } r_{t+1}}{\overset{\text{动作 } a_t}{\longleftrightarrow}} \text{环境}
+$$
 
 1. 智能体观察到当前状态 $s_t$，选择动作 $a_t$
 2. 环境执行动作，转移到新状态 $s_{t+1}$，返回奖励 $r_{t+1}$
@@ -101,17 +95,12 @@ $$G_t = r_{t+1} + \gamma\, r_{t+2} + \gamma^2\, r_{t+3} + \cdots = \sum_{k=0}^{\
 
 所以，$\gamma$ 的大小决定了智能体的“视野”。让我们用下面这只老鼠来算一笔账：
 
-<div align="center" style="margin: 2.5rem 0;">
-
-```mermaid
-graph LR
-    S["起点 🐭"] -->|"1 步<br/>r = +1"| C1["小奶酪 🧀"]
-    S -->|"4 步<br/>r = +10"| C2["大奶酪 🧀🧀🧀"]
-    C2 -.->|"猫在旁边 🐱"| CAT["危险"]
-
-```
-
-</div>
+$$
+\begin{aligned}
+\text{起点 🐭} &\xrightarrow{\text{1 步},\ r=+1} \text{小奶酪 🧀} \\
+\text{起点 🐭} &\xrightarrow{\text{4 步},\ r=+10} \text{大奶酪 🧀🧀🧀} \xrightarrow{\text{猫在旁边 🐱}} \text{危险}
+\end{aligned}
+$$
 
 老鼠面前有两条路：
 
