@@ -747,8 +747,8 @@ def grpo_group_normalize(rewards: list[float]) -> list[float]:
 # 示例：8 个回答的奖励
 rewards = [1.5, 0.0, 1.5, 0.0, 1.0, 1.5, 0.5, 1.5]
 advantages = grpo_group_normalize(rewards)
-# 归一化优势: [ 0.82 -1.23  0.82 -1.23  0.12  0.82 -0.53  0.82]
-# 均值: 0.875, 标准差: 0.637
+# 归一化优势: [ 0.89 -1.48  0.89 -1.48  0.10  0.89 -0.69  0.89]
+# 均值: 0.9375, 标准差: 0.634
 ```
 
 <details>
