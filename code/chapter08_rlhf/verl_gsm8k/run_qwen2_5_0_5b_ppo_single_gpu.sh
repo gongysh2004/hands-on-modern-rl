@@ -9,8 +9,8 @@ CRITIC_MODEL_PATH=${CRITIC_MODEL_PATH:-$MODEL_PATH}
 NNODES=${NNODES:-1}
 NDEVICES_PER_NODE=${NDEVICES_PER_NODE:-1}
 
-TRAIN_BATCH_SIZE=${TRAIN_BATCH_SIZE:-128}
-PPO_MINI_BATCH_SIZE=${PPO_MINI_BATCH_SIZE:-64}
+TRAIN_BATCH_SIZE=${TRAIN_BATCH_SIZE:-64}
+PPO_MINI_BATCH_SIZE=${PPO_MINI_BATCH_SIZE:-32}
 MAX_PROMPT_LENGTH=${MAX_PROMPT_LENGTH:-512}
 MAX_RESPONSE_LENGTH=${MAX_RESPONSE_LENGTH:-256}
 
@@ -81,8 +81,8 @@ CRITIC=(
     critic.optim.lr=${CRITIC_LR}
     critic.use_dynamic_bsz=True
     critic.ppo_max_token_len_per_gpu=16384
-    critic.fsdp.param_offload=False
-    critic.fsdp.optimizer_offload=False
+    critic.model.fsdp_config.param_offload=False
+    critic.model.fsdp_config.optimizer_offload=False
 )
 
 REWARD=(
@@ -102,6 +102,18 @@ TRAINER=(
     trainer.test_freq=${TEST_FREQ}
     trainer.total_epochs=${TOTAL_EPOCHS}
 )
+
+RAY_DASHBOARD_HOST="${RAY_DASHBOARD_HOST:-0.0.0.0}"
+RAY_NODE_IP="${RAY_NODE_IP:-$(hostname -I | awk '{print $1}')}"
+RAY_PORT="${RAY_PORT:-6379}"
+
+ray stop --force 2>/dev/null || true
+ray start --head \
+    --dashboard-host="${RAY_DASHBOARD_HOST}" \
+    --node-ip-address="${RAY_NODE_IP}" \
+    --port="${RAY_PORT}"
+
+export RAY_ADDRESS=auto
 
 python3 -m verl.trainer.main_ppo \
     "${DATA[@]}" \
