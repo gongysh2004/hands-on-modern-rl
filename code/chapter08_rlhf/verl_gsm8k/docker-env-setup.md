@@ -4,28 +4,62 @@
 
 > 适用场景：宿主机已有 GPU、模型目录 `/opt/data`、课程代码仓库，需要在隔离容器里复现训练环境。
 
+**推荐方式：** 使用同目录下的 `Dockerfile` 一次性打镜像，verl / vllm / GSM8K 数据均固化在镜像内，无需每次重建容器后手动装依赖。
+
 ---
 
 ## 1. 最终可用环境
 
 | 组件 | 版本 | 说明 |
 |------|------|------|
+| 课程镜像 | `hands-on-modern-rl:verl-gsm8k` | 由 `Dockerfile` 构建，含全部依赖 |
 | 基础镜像 | `javirub/flashattention-pytorch:flashattn2.8.1-pytorch2.7.1-cuda12.8-cudnn9-runtime` | 预装 torch 2.7.1 + flash_attn 2.8.1 |
 | torch | 2.7.1+cu128 | **不要被 pip 降级** |
 | flash_attn | 2.8.1 | 与 torch 2.7.1 绑定 |
 | verl | 0.5.0（`v0.5.x` 分支） | 安装路径 `/opt/verl` |
 | vllm | **0.10.0**（`--no-deps` 安装） | 官方要求 torch==2.7.1，与镜像匹配 |
-| ray | 2.47.1 | verl 依赖，训练脚本会自动启动 |
+| ray | 2.55.1 | verl 依赖，训练脚本会自动启动 |
 | transformers | 4.55.4 | 需保持 4.x，避免被升到 5.x |
 | tokenizers | 0.21.4 | 与 transformers 4.x 配套 |
 
 **关键结论：** verl 0.5.x 官方声明 vllm ≤ 0.8.5，但该区间要求 torch 2.6.0，会与镜像里的 flash_attn 冲突。实测 **`verl 0.5.0 + vllm 0.10.0 (--no-deps) + torch 2.7.1`** 可正常跑 PPO 训练。
 
+**安装策略：** 不装 `pip install -e ".[vllm]"`（`setup.py` 锁 `vllm<=0.8.5` 会降级 torch），改为 `pip install -e .` 后单独装 `vllm==0.10.0 --no-deps`。
+
 ---
 
-## 2. 启动 Docker 容器
+## 2. 构建镜像并启动容器（推荐）
 
-### 2.1 推荐启动命令（当前在用）
+### 2.1 构建镜像
+
+在宿主机执行：
+
+```bash
+cd /root/hands-on-modern-rl/code/chapter08_rlhf/verl_gsm8k
+
+# 需要代理时（构建阶段 git clone / pip install 会用到）
+docker build \
+  --build-arg HTTP_PROXY=http://192.168.99.128:7890 \
+  --build-arg HTTPS_PROXY=http://192.168.99.128:7890 \
+  -t hands-on-modern-rl:verl-gsm8k .
+
+# 无需代理时
+docker build -t hands-on-modern-rl:verl-gsm8k .
+```
+
+`Dockerfile` 会自动完成：安装 git / build-essential、克隆 verl、安装依赖、预处理 GSM8K 数据、环境自检。构建耗时约 5 分钟（有代理、基础镜像已缓存时）。
+
+构建成功后期望自检输出：
+
+```
+torch: 2.7.1+cu128 False    # 构建时无 GPU，False 属正常
+flash_attn ok
+vllm: 0.10.0
+verl: 0.5.0
+ray: 2.55.1
+```
+
+### 2.2 启动容器
 
 ```bash
 docker run -d \
@@ -36,11 +70,12 @@ docker run -d \
   -v /root/hands-on-modern-rl:/root/hands-on-modern-rl \
   -v /opt/data:/opt/data \
   -w /root/hands-on-modern-rl \
-  javirub/flashattention-pytorch:flashattn2.8.1-pytorch2.7.1-cuda12.8-cudnn9-runtime \
-  sleep infinity
+  hands-on-modern-rl:verl-gsm8k
 ```
 
-### 2.2 参数说明
+镜像内已包含 `/opt/verl`、`/root/data/gsm8k/`，可直接进入训练（见第 10 节）。
+
+### 2.3 参数说明
 
 | 参数 | 作用 |
 |------|------|
@@ -50,21 +85,27 @@ docker run -d \
 | `-v .../hands-on-modern-rl` | 挂载课程代码，容器内改动会同步到宿主机 |
 | `-v /opt/data:/opt/data` | 挂载模型与数据目录 |
 
-### 2.3 进入容器
+### 2.4 进入容器
 
 ```bash
 docker exec -it hands-on-modern-rl bash
 ```
 
-### 2.4 镜像选型说明
+### 2.5 镜像选型说明
 
-最初尝试过 `nvidia/cuda:12.8.1-devel-ubuntu22.04` 裸镜像，但需要从零编译 flash_attn，耗时且易出错。后改用 **预装 flash_attn 的 PyTorch 镜像**，保留 torch 2.7.1 栈，再单独处理 vllm 兼容性。
+最初尝试过 `nvidia/cuda:12.8.1-devel-ubuntu22.04` 裸镜像，但需要从零编译 flash_attn，耗时且易出错。后改用 **预装 flash_attn 的 PyTorch 镜像**，保留 torch 2.7.1 栈，再单独处理 vllm 兼容性，最终固化为 `Dockerfile`。
 
 ---
 
 ## 3. 配置网络代理（可选）
 
-容器内访问 GitHub / PyPI 需要代理时，在 shell 中设置：
+### 3.1 构建阶段
+
+通过 `Dockerfile` 的 `ARG HTTP_PROXY` / `ARG HTTPS_PROXY` 传入，见第 2.1 节。
+
+### 3.2 容器运行时
+
+容器内访问 GitHub / PyPI / wandb 需要代理时，在 shell 中设置：
 
 ```bash
 export https_proxy=http://192.168.99.128:7890
@@ -77,7 +118,9 @@ export HTTPS_PROXY=http://192.168.99.128:7890
 
 ---
 
-## 4. 安装 verl 0.5.x
+## 4. 手动安装 verl 0.5.x（备选）
+
+> 若未使用 `Dockerfile` 打镜像，而是从基础镜像裸启动容器，按本节手动安装。推荐做法见第 2 节。
 
 ### 4.1 安装 git（如缺失）
 
@@ -102,29 +145,22 @@ cd /opt/verl
 grep -v "^flash-attn" requirements.txt | grep -v "^pre-commit" > /tmp/verl-requirements.txt
 pip install -r /tmp/verl-requirements.txt
 
-# 安装 verl（含 vllm extra，会拉 vllm 0.8.x）
-pip install -e ".[vllm]"
+# 不装 [vllm] extra（setup.py 锁 vllm<=0.8.5 会降级 torch），只装 verl 本体
+pip install -e .
+
+# 固定 transformers 4.x，直接装与 torch 2.7.1 匹配的 vllm 0.10.0
+pip install "transformers>=4.51.1,<5.0" "tokenizers>=0.21,<0.22"
+pip install vllm==0.10.0 --no-deps
 ```
 
-### 4.4 安装后常见问题：torch 被降级
+### 4.4 若误装 `[vllm]` extra：torch 被降级
 
-`pip install -e ".[vllm]"` 会把 **torch 从 2.7.1 降到 2.6.0**，导致 flash_attn 无法导入。
-
-**处理思路：**
-
-1. 先恢复镜像自带的 torch 2.7.1
-2. 用 `--no-deps` 安装与 torch 2.7.1 匹配的 vllm 0.10.0
-3. 手动补齐 vllm 运行时依赖
+`pip install -e ".[vllm]"` 会把 **torch 从 2.7.1 降到 2.6.0**，导致 flash_attn 无法导入。若已误装，先恢复 torch 再按 4.3 节装 vllm：
 
 ```bash
-# 恢复 torch（如已被降级）
 pip install torch==2.7.1+cu128 torchvision==0.22.1+cu128 torchaudio==2.7.1+cu128 \
   --index-url https://download.pytorch.org/whl/cu128
-
-# 固定 transformers 在 4.x（避免 vllm / verl 冲突）
 pip install "transformers>=4.51.1,<5.0" "tokenizers>=0.21,<0.22"
-
-# 安装 vllm 0.10.0，不改动 torch
 pip install vllm==0.10.0 --no-deps
 ```
 
@@ -161,7 +197,9 @@ apt-get update && apt-get install -y build-essential
 
 ## 6. 准备 GSM8K 数据
 
-在容器内执行 verl 自带预处理脚本：
+使用 `Dockerfile` 构建的镜像已内置数据（`/root/data/gsm8k/`），可跳过本节。
+
+手动安装时，在容器内执行 verl 自带预处理脚本：
 
 ```bash
 cd /opt/verl
@@ -213,7 +251,7 @@ torch: 2.7.1+cu128 True
 flash_attn ok
 vllm: 0.10.0
 verl: 0.5.0
-ray: 2.47.1
+ray: 2.55.1
 ```
 
 ---
@@ -309,10 +347,24 @@ CUDA_VISIBLE_DEVICES=0 ./run_qwen2_5_0_5b_ppo_single_gpu.sh
 
 ## 12. 容器重建（环境丢失时）
 
-若容器被删除，按顺序重建：
+### 12.1 使用课程镜像（推荐）
+
+镜像 `hands-on-modern-rl:verl-gsm8k` 已固化环境，容器删除后只需重新 `docker run`（见第 2.2 节），无需重装依赖。
+
+若镜像也不存在，重新构建：
 
 ```bash
-# 1. 宿主机启动容器
+cd /root/hands-on-modern-rl/code/chapter08_rlhf/verl_gsm8k
+docker build \
+  --build-arg HTTP_PROXY=http://192.168.99.128:7890 \
+  --build-arg HTTPS_PROXY=http://192.168.99.128:7890 \
+  -t hands-on-modern-rl:verl-gsm8k .
+```
+
+### 12.2 从基础镜像手动重建（备选）
+
+```bash
+# 1. 宿主机启动基础镜像容器
 docker run -d \
   --name hands-on-modern-rl \
   --network host --gpus all --ipc=host \
@@ -323,12 +375,10 @@ docker run -d \
   sleep infinity
 
 # 2. 进入容器，设置代理，依次执行第 4~6 节命令
-
-# 3. 验证后启动训练
 docker exec -it hands-on-modern-rl bash
 ```
 
-> 容器内 pip 安装的包不会持久化到镜像；重建容器后需重新安装 verl / vllm 依赖。课程代码和 checkpoint 在挂载目录中，不会丢失。
+> 从基础镜像裸启动时，容器内 pip 安装的包不会持久化到镜像；重建容器后需重新安装 verl / vllm 依赖。课程代码和 checkpoint 在挂载目录中，不会丢失。
 
 ---
 
@@ -336,13 +386,16 @@ docker exec -it hands-on-modern-rl bash
 
 | 路径 | 说明 |
 |------|------|
+| `Dockerfile` | 一键构建 `hands-on-modern-rl:verl-gsm8k` 镜像 |
+| `docker-env-setup.md` | 本文档 |
 | `run_qwen2_5_0_5b_ppo_single_gpu.sh` | 单卡 PPO 启动脚本 |
 | `run_qwen2_5_0_5b_ppo_8gpu.sh` | 8 卡 PPO 启动脚本 |
 | `gsm8k_reward.py` | GSM8K 规则 reward（verl 0.5.x 兼容） |
 | `gsm8k_reward_advanced.py` | accuracy + format 组合 reward |
 | `checkpoints/` | 训练 checkpoint 输出目录 |
-| `/opt/verl` | 容器内 verl 源码（非挂载，重建容器需重装） |
+| `/opt/verl` | 镜像内 verl 源码（`Dockerfile` 构建时写入） |
+| `/root/data/gsm8k/` | 镜像内 GSM8K 数据（`Dockerfile` 构建时写入） |
 
 ---
 
-*文档生成时间：2026-06-09，基于实际搭建与排错过程整理。*
+*文档更新时间：2026-06-09，已补充 `Dockerfile` 构建流程。*
