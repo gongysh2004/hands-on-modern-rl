@@ -24,7 +24,7 @@ Unlike turn-based board games, StarCraft is **real-time**: both sides act simult
 
 <img src="../../chapter06_actor_critic/images/sc2-gameplay.gif" alt="StarCraft II gameplay" width="500" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>A StarCraft II match. The center is the main battlefield view; the lower-left is the minimap (global situation awareness); the lower-right is the resource and unit information panel.</em>
 </div>
 
@@ -36,7 +36,7 @@ StarCraft II, in contrast, is an **imperfect-information game**: the fog of war 
 
 <img src="../../chapter06_actor_critic/images/alphastar-nature-cover.png" alt="AlphaStar on the cover of Nature" width="800" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>AlphaStar: Grandmaster level in StarCraft II using multi-agent reinforcement learning, published in <a href="https://doi.org/10.1038/s41586-019-1724-z" target="_blank" rel="noopener noreferrer">Nature 2019</a>.</em>
 </div>
 
@@ -48,7 +48,7 @@ At its core, AlphaStar is a large-scale Actor-Critic system. The network consume
 
 <img src="../../chapter06_actor_critic/images/nature-fig1.png" alt="AlphaStar system architecture" width="1000" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>Figure 1: AlphaStar system architecture. (a) Real-time decision layer: processes game state and outputs a structured action; (b) learning framework: combines supervised learning (imitation of human replays) and reinforcement learning (self-play); (c) population-based training (PBT): maintains a diverse pool of policies. Source: <a href="https://doi.org/10.1038/s41586-019-1724-z" target="_blank" rel="noopener noreferrer">Vinyals et al., 2019, Fig.1</a>.</em>
 </div>
 
@@ -92,7 +92,7 @@ AlphaStar's most distinctive innovation is **league training**. The league maint
 
 <img src="../../chapter06_actor_critic/images/alphastar-training-curves.png" alt="AlphaStar policy evolution: Self-play vs With exploiters" width="1000" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>Figure 2: Comparing policy evolution. Top: pure self-play, where the agent gradually collapses from a mixture into a narrow single-style specialization. Bottom: league training with exploiters, where exploiters actively expose weaknesses and force the agent to maintain a more robust and diverse policy distribution. Source: <a href="https://doi.org/10.1038/s41586-019-1724-z" target="_blank" rel="noopener noreferrer">Vinyals et al., 2019</a>.</em>
 </div>
 
@@ -104,7 +104,7 @@ The full training process lasted about **44 days**. During this period, millions
 
 <img src="../../chapter06_actor_critic/images/nature-fig3.png" alt="AlphaStar benchmarks and TrueSkill ratings" width="1000" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>Figure 3: AlphaStar benchmarks and TrueSkill ratings. (a) Win rate of AlphaStar Final against human players across percentiles; (b) TrueSkill ratings against the three races (Terran/Protoss/Zerg); (c) win/loss distributions by race. AlphaStar reaches Grandmaster level across all matchups. Source: <a href="https://doi.org/10.1038/s41586-019-1724-z" target="_blank" rel="noopener noreferrer">Vinyals et al., 2019, Fig.3</a>.</em>
 </div>
 
@@ -152,7 +152,7 @@ SAC has been deployed directly on physical robots across a range of tasks:
 
 <img src="../../chapter06_actor_critic/images/sac-real-robot.gif" alt="SAC deployed on real robots" width="800" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>Figure 4: SAC deployed directly on physical robots for dexterous manipulation. Source: <a href="https://bair.berkeley.edu/blog/2018/12/14/sac/" target="_blank" rel="noopener noreferrer">BAIR Blog, 2018</a>.</em>
 </div>
 
@@ -171,13 +171,13 @@ The BAIR blog provides training-curve comparisons between SAC and DDPG, TD3, and
 
 <img src="../../chapter06_actor_critic/images/sac-benchmark-cheetah.png" alt="SAC training curve on HalfCheetah" width="1000" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>Figure 5: Training curves on HalfCheetah-v2. SAC (blue) is noticeably more sample-efficient than PPO and DDPG, and it is more consistent across random seeds. Source: <a href="https://bair.berkeley.edu/blog/2018/12/14/sac/" target="_blank" rel="noopener noreferrer">BAIR Blog</a>.</em>
 </div>
 
 <img src="../../chapter06_actor_critic/images/sac-benchmark-humanoid.png" alt="SAC training curve on Humanoid" width="1000" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>Figure 6: Training curves on Humanoid-v2 (a 17-DoF humanoid). Even in a high-dimensional action space, SAC still converges stably. Source: <a href="https://bair.berkeley.edu/blog/2018/12/14/sac/" target="_blank" rel="noopener noreferrer">BAIR Blog</a>.</em>
 </div>
 
@@ -214,7 +214,7 @@ In other words, Isaac Lab takes the "one network makes decisions, one network ev
 
 <img src="../../chapter06_actor_critic/images/isaac-lab-overview.png" alt="Isaac Lab overview" width="1000" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>Figure 7: NVIDIA Isaac Lab simulation environments. A humanoid robot performs terrain navigation tasks in GPU-accelerated Isaac Sim physics, and the platform supports training across thousands of parallel environments. Source: <a href="https://isaac-sim.github.io/IsaacLab/" target="_blank" rel="noopener noreferrer">NVIDIA Isaac Lab</a>.</em>
 </div>
 
@@ -224,7 +224,7 @@ Isaac Lab ships with many built-in robot models, spanning manipulators, quadrupe
 
 <img src="../../chapter06_actor_critic/images/isaac-lab-robots.png" alt="Robots and tasks supported by Isaac Lab" width="1000" loading="eager" decoding="async">
 
-<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: -10px; margin-bottom: 20px;">
+<div style="text-align: center; font-size: 0.9em; color: var(--vp-c-text-2); margin-top: 12px; margin-bottom: 24px; padding: 0 12px; line-height: 1.6;">
   <em>Figure 8: Robot manipulation and navigation tasks supported by Isaac Lab. It showcases diverse simulation scenes: arm grasping, quadruped walking, dexterous hand manipulation, and more, across home, industrial, and lab environments. Source: <a href="https://isaac-sim.github.io/IsaacLab/" target="_blank" rel="noopener noreferrer">NVIDIA Isaac Lab</a>.</em>
 </div>
 
